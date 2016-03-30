@@ -1,0 +1,1164 @@
+---
+title: "Taller básico de R"
+author: "Adolfo De Unánue T."
+date: "30 de marzo de 2016"
+output:
+  ioslides_presentation:
+    css: udla-actuaria.css
+    smaller: true
+    fig_width: 8.5
+    keep_md: yes
+    transition: slower
+    widescreen: yes
+github: nanounanue
+twitter: '@nano_unanue'
+runtime: shiny
+---
+
+# Introducción
+
+## Repositorio
+
+* Página: `https://github.com/nanounanue/xxvii-congreso-nacional-actuaria-udla/tree/master`
+
+* Repo: `git@github.com:nanounanue/xxvii-congreso-nacional-actuaria-udla.git`
+
+* [Descargar `zip`](https://github.com/nanounanue/xxvii-congreso-nacional-actuaria-udla/archive/master.zip)
+
+# ¿Por qué R?
+
+## Greg Snow, 2006 
+
+Busses are very easy to use, you just need to know which bus to get on, where to get on,
+and where to get off (and you need to pay your fare). Cars, on the other hand, require
+much more work: you need to have some type of map or directions (even if the map is
+in your head), you need to put gas in every now and then, you need to know the rules of
+the road (have some type of drivers license). The big advantage of the car is that it can
+take you a bunch of places that the bus does not go and it is quicker for some trips that
+would require transferring between busses.
+
+Using this analogy, programs like SPSS are busses, easy to use for the standard things,
+but very frustrating if you want to do something that is not already preprogrammed.
+R is a 4-wheel drive SUV (though environmentally friendly) with a bike on the back, a
+kayak on top, good walking and running shoes in the passenger seat, and mountain
+climbing and spelunking gear in the back.
+
+R can take you anywhere you want to go if you take time to learn how to use the equipment,
+but that is going to take longer than learning where the bus stops are in SPSS.
+
+
+Tomado de **Hands on Programming with R** de *Garrent Grolemund*
+
+
+## Algunas características de R
+
+
+* Lenguaje estadístico.
+* Gráficas, manipulación de datos.
+* Miles de paquetes de algoritmos estadísticos, aprendizaje de máquina, minería.
+* Soporte para Hadoop, Big data, Multiprocesador, ejecución en paralelo.
+* ¡Conexión con casi todo!
+* Geoespacial, series de tiempo, bases de datos, etc.
+* Reportes y presentaciones automáticos (¡esta presentación por ejemplo!)
+
+
+# RStudio: quicktour
+
+# REPL: glimpse
+
+## REPL
+
+**R**ead
+
+**E**valuate
+
+**P**rint
+
+**L**oop
+
+# Bases del Lenguaje
+
+## En `R` todo son
+
+* Objetos
+    * Pueden ser vistos como un espacio de almacenamiento y un nombre asociado a ello.
+    * Todo está  en la memoria de la computadora (por el momento).
+
+* Funciones
+    * Tipo especial de objeto.
+    * Realiza ciertas operaciones, toma algunos argumentos y produce un resultado de la realización de las operaciones.
+
+
+## Asignación
+
+* Los objetos y funciones se almacenan usando el operador de asignación `<-`
+
+
+```{r}
+x <- 1345
+y <- 2
+```
+
+
+* Si queremos ver lo que esta almacenado tecleamos su nombre.
+
+```{r}
+  x
+  y
+```
+
+## ¿Qué hay ahí?
+
+* Si queremos ver todos los objetos en memoria: `ls()` u `objects()`
+
+```{r}
+ls()
+```
+
+
+## Vectores
+
+Un vector es un conjunto ordenado de cosas, la función para **crearlo** es `c()` de _concatenar_ ...
+
+```{r}
+v <- c(4, 18, 23.6, 23)
+v
+```
+
+Una característica importante del vector es su longitud
+
+```{r}
+length(v)
+```
+
+## Vectores
+
+Es posible generar vectores como _secuencias_:
+
+```{r}
+x <- 1:10
+x
+10:15 - 1 ## ¿Qué pasó aquí?
+```
+
+
+```{r}
+10:(15 - 1) ## Mucho mejor
+```
+
+## Vectores
+
+Se pueden generar secuencias que no sean enteros
+
+```{r}
+seq(from = -4, to=3, by = 0.5)
+```
+
+```{r}
+seq(from = 1, to = 5, length = 3)
+```
+
+```{r}
+seq(length = 10, from = -1, by = 0.2)
+```
+
+## Vectores
+
+También se puede crear _repitiendo_ un elemento:
+
+```{r}
+rep(5, 8)
+```
+
+
+```{r}
+rep("character", 5)
+```
+
+
+## Vectores
+
+Los elementos del vector se pueden obtener mediante el índice
+
+```{r}
+v[2]
+```
+
+_Nota que en_ `R` el índice empieza en `1`.
+
+```{r}
+v[1] <- "¡hola!"
+v
+```
+
+Y podemos agregar nuevos elementos
+
+```{r}
+v[length(v) + 1] <- -45
+v
+```
+
+## Vectores
+
+Las operaciones sobre vectores están optimizadas, en el _caló_ de `R` se dice que están _vectorizadas_.
+
+
+```{r}
+v <- c(2, 3, 4, 6)
+x <- sqrt(v)
+x
+```
+
+Operan elemento por elemento, por lo que los vectores en `R` **no** son los vectores de las clases de mate.
+
+Por ejemplo, estas operaciones no tienen sentido para vectores matemáticos:
+
+```{r}
+v + 1
+```
+
+
+```{r}
+v == c(1,3,5,7)
+```
+
+## Vectores
+
+Otra característica es que hay un _roll-up_ de vectores
+
+```{r}
+v1 <- c(4, 6, 87)
+v2 <- c(2,10)
+v1+v2 
+```
+
+¿Puedes ver que pasó?
+
+## Vectores
+
+Una de las operaciones que uno quiere realizar cuando analiza datos es el _filtrado_, por ejemplo, quiero ver cuales son positivos
+
+```{r}
+x <- c(1, -3, -2, 4, -10, 2, 3, 90)
+x > 0
+```
+
+Entonces, puedo utilizar este índice lógico, para _extraer_ o _filtrar_ los positivos:
+
+```{r}
+x[x>0]
+```
+
+o los mayores de `2`
+
+```{r}
+x[x > 2]
+```
+
+## Vectores
+
+Los índices en `R` son más versátiles que en otros lenguajes, por ejemplo, es posible usar _índices vectoriales_
+
+```{r}
+x
+x[c(4, 2)]
+```
+
+## Vectores
+
+Lo que sigue, es muy intuitivo, pero pude confundirte si has programado en `python`. El índice _negativo_ **remueve**
+
+
+```{r}
+x
+x[-1]
+```
+
+
+```{r}
+x[-c(1, 5)]
+```
+
+Nota como ninguna operación de filtrado _modifica_ el vector original `x`.
+
+## Vectores
+
+Hasta ahora hemos visto vectores numéricos, pero pueden ser de cualquier tipo:
+
+```{r}
+flotantes <- c(1.1, 1.3, .4)
+flotantes
+```
+
+```{r}
+letras <- c('a', 'b', 'c')
+letras
+```
+
+```{r}
+hoy <- Sys.Date()
+(fechas <- seq(hoy, length.out=10, by = "1 week"))
+```
+
+
+## Vectores
+
+Pero si los mezclas, ocurre una operación de _transformación_ o _casting_ al elemento más complejo.
+
+```{r}
+enteros <- c(1, 2, 3)
+enteros
+
+enteros <- c(1,2,3, 4.1)
+enteros
+
+enteros <- c(1,2,3, "a")
+enteros
+```
+
+## Vectores
+
+El vector se puede analizar rápidamente, si es numérico usando lo siguiente:
+
+```{r}
+x <- c(1,2,3,4,5,6)
+sum(x) # Total
+mean(x) # Promedio
+sd(x) # Desviación estándar
+summary(x) # O una descripción estadística completa
+```
+
+## Vectores
+
+Y se puede analizar visualmente también:
+
+```{r}
+names(x) <- c("algo", "otro", "manzanas", "peras", "quesos", "jitomates")
+barplot(x) 
+```
+
+## Vectores
+
+Si tienes dos variables
+
+```{r}
+y <- rnorm(1000, mean= 0, sd=1)  # Genero números aleatorios distribuidos normalmente (*)
+x <- rnorm(1000, mean=3, sd=1)
+plot(x,y, main="Scatterplot")
+```
+
+
+## Vectores
+
+Por último, es posible preguntar si un objeto es un vector:
+
+```{r}
+
+is.vector(x)
+
+is.numeric(x)
+
+is.character(x)
+```
+
+
+## Factores
+
+Cuando uno quiere analizar datos, regularmente necesita variables que funcionan como etiquetas. Estas etiquetas pueden ser contadas, pero no sumadas. A este tipo de variables se les conoce como variables _categóricas_ y en `R` se llaman **factores**.
+
+Es posible crearlas a partir de un `vector`
+
+```{r}
+f <- c("M", "F", "M", "M", "F", "M")
+f <- factor(f)
+f
+```
+
+Y pueden tener una descripción larga (`label`)
+
+```{r}
+f <- factor(c("M", "F", "M", "M", "F", "M", "F"), levels=c("M", "F"), labels=c("Hombre", "Mujer"))
+f
+```
+
+
+## Factores
+
+Hagámos una copia de `f`
+
+```{r}
+g <- f
+g
+f
+```
+
+## Factores
+
+Los `levels` se pueden extraer con la siguiente función:
+
+```{r}
+levels(g)
+```
+
+## Factores
+
+¿Qué pasa si quiero agregar un nuevo elemento al final del factor?
+
+```{r}
+g[length(g)+1] <- "NR"
+g
+```
+
+Mmmm, como el _nivel_ `NR` no estaba definido, lo agrega como un valor inexistente (`NA`).
+
+## Factores
+
+```{r}
+g <- factor(c("a", "b", "a", "a", "b", "b", "b"), levels=c("a", "b", "c"))
+g
+```
+
+
+```{r}
+g[length(g)+1] <- "c"
+g
+```
+
+## Factores
+
+Una tabla con los conteos por nivel se puede obtener fácilmente
+
+```{r}
+table(g)
+```
+
+## Factores
+
+```{r}
+a <- factor(c("estudiante", "profesor", "estudiante", "profesor", "estudiante", "estudiante", "estudiante"))
+a
+```
+
+Es posible mezclar los dos factores en una tabla 
+
+```{r}
+t <- table(a,f)
+t
+```
+
+Nota como se le está asignando el género por renglón.
+
+## Factores
+
+Una tabla marginal, es aquella que resume los conteos por dimensión o _margen_
+
+```{r}
+margin.table(t, 1)
+margin.table(t,2)
+```
+
+## Factores
+
+Y una tabla de _proporciones_ nos da (obviamente) la proporción
+
+```{r}
+prop.table(t, 2) 
+```
+
+## Factores
+
+LA representación visual de un factor es una gráfica de barras
+
+```{r}
+plot(f, main = "Género")
+```
+
+
+## Listas
+
+Otro tipo de objeto son las _listas_, son parecidas a los vectores, pero con una diferencia importante: pueden tener los elementos de diferentes tipos.
+
+```{r}
+lista <- list(1, 2, 3, 4, 5)
+lista
+```
+
+## Listas
+
+El operador de extracción (`[`), devuelve una _lista_
+
+```{r}
+lista[1]
+is.list(lista[1])
+is.vector(lista[1])
+```
+
+
+## Listas
+
+El operador `[[` devuelve un _vector_
+
+
+```{r}
+lista[[1]]
+is.list(lista[[1]])
+is.vector(lista[[1]])
+```
+
+## Listas
+
+Como mencioné es posible tener varios tipos de datos mezclados en una lista (¿Puedes identificarlos?)
+
+```{r}
+edificio <- list(direccion="Dinamarca 73", dimensiones=c(10, 15, 2.5), renta.mensual=6300)
+edificio
+```
+
+## Listas
+
+Existe otro operador de acceso: `$` 
+
+```{r}
+edificio$renta.mensual
+edificio[3]
+edificio[[3]]
+```
+
+## Listas
+
+```{r}
+names(edificio)
+```
+
+Se pueden agregar elementos a la lista
+
+```{r}
+edificio$dueños <- c("Ana", "Miguel")
+names(edificio)
+```
+
+## Listas
+
+Al igual que en el caso de los vectores, el índice negativo **remueve**
+
+```{r}
+edificio <- edificio[-3]
+edificio
+```
+
+
+## Data frames
+
+* Se podría argumentar, que cuando se piensa en análisis de datos, se piensa en "tablas" o en "bases de datos", la característica común es que son objetos rectangulares (de dos dimensiones).
+
+* `R` proveé una abstración para los datos en formato rectangular llamado `data.frame`
+
+```{r}
+df <- data.frame(var.1=c('A', 'B', 'C', 'A'), var.2=c('hola', 'adios', 'ciao', 'juan'), var.3=c(1, 2, 3, 4.5))
+df
+```
+
+## Data frames
+
+La extracción ahora debe de hacerse en dos dimensiones (renglones, columnas)
+
+```{r}
+df[3,1]
+```
+
+Extraer un renglón
+
+```{r}
+df[3,]
+```
+
+
+
+## Data frames
+
+Extraer una columna
+
+```{r}
+df[,3]
+```
+
+Se puede utilizar el nombre de la columna para extraer la columna completa
+
+```{r}
+df$var.3
+```
+
+
+## Data frames
+
+La extracción "mágica" se preserva también en los `data.frame`s
+
+```{r}
+df[df$var.3 > 2,]
+```
+
+
+```{r}
+
+df[df$var.1 == "A", "var.3"]
+```
+
+## Data frames
+
+Así como los vectores (y sus derivados) tenían longitud, los `data.frame`s tiene **tamaño** y es bidimensional
+
+```{r}
+dim(df)
+```
+
+
+
+```{r}
+nrow(df)
+ncol(df)
+```
+
+
+```{r}
+names(df)
+```
+
+# Manipulando fechas: `lubridate`
+
+## Instalación
+
+```{r}
+if(!require(lubridate)){
+    install.packages('lubridate', dependencies = TRUE, repos = "http://cran.us.r-project.org")
+    library(lubridate)
+}
+```
+
+## `lubridate`
+
+- Las fechas son uno de los jinetes del apocalipsis
+    - Más bien, lo que resulta de capturar fechas (Diferentes formatos, Timezones)
+    - Y manipularlas (intervalos, sumas, diferencias, extracción)
+
+- Además son el tipo de datos primordial de las series de tiempo
+
+- `lubridate` trata de solucionar esto
+
+- `lubridate` soporta *instantes*, *intervalos*, *duraciones* y *periodos*
+
+## Zonas horarias
+
+Esa fecha que está en el *data set* ¿Es en la hora del servidor? ¿Del dispositivo? ¿Local?
+
+![Zonas horarias. By TimeZonesBoy - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=42165217](imagenes/640px-Standard_World_Time_Zones.png)
+
+## Ejemplos
+
+```{r}
+# Convertir cadenas en fechas
+ymd('20160330') # Nota el TZ
+dmy('30032016')
+mdy_hm('033020161600') # ¡Esta no es la hora a la que empezó el taller!
+mdy_hm('033020161600', tz='America/Mexico_City') # Mucho mejor
+```
+
+
+La lista de zonas horarias se puede ver [aquí](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+
+## Ejemplos
+
+```{r}
+# Instantes
+(inicio_taller <- dmy_hm('300320161600', tz='America/Mexico_City'))
+(fin_taller <- dmy_hm('300320161800', tz='America/Mexico_City'))
+```
+
+## Ejemplos
+
+```{r}
+# Extracción
+day(inicio_taller)
+month(inicio_taller,label = TRUE, abbr=FALSE)
+year(inicio_taller)
+wday(inicio_taller,label = TRUE, abbr=TRUE)
+```
+
+
+## Ejemplos
+
+```{r}
+# Intervalos: Un lapso de tiempo que ocurre entre dos instantes
+(taller_basico <- interval(inicio_taller, fin_taller))
+
+int_start(taller_basico) 
+int_length(taller_basico) ## Segundos
+```
+
+## Ejemplos
+
+```{r}
+fin_taller - inicio_taller ## difftime
+
+inicio_receso <- dmy_hm('300320161700', tz='America/Mexico_City')
+inicio_receso %within% taller_basico
+```
+
+## Ejemplos
+
+```{r}
+# Duración: Como un intervalo, pero sin estar anclado
+# Buenos para hacer aritmética de fechas
+dweeks(1) # 1 semana
+
+inicio_receso + dminutes(10)
+
+round_date(inicio_taller, unit = 'month') # ¿Era lo que esperabas?
+```
+
+
+
+# Limpiando cadenas: `stringr`
+
+## Instalación
+
+```{r}
+if(!require(stringr)){
+    install.packages('stringr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
+    library(stringr)
+}
+```
+
+## ¿Por qué?
+
+- Muchas fuentes de datos tendrán columnas que son cadenas de caracteres y quizá necesitemos manipularlas.
+
+- *Text mining*
+
+- Manipulación con expresiones regulares `regex`
+
+
+## `RegEx`: Básicos
+
+- Pensar en patrones (*patterns*).
+- Operadores básicos
+  - `OR`: `gato|gata` hará *match* con gato o gata.
+  - Agrupamiento o precedencia de operadores, `gat(a|o)` tiene el mismo significado que `gato|gata`.
+  - Cuantificadores: `?` (0 ó 1), `+` (uno ó más), `*` (cero ó más).
+- `^` Inicio de renglón, `$` fin de renglón.
+
+## `RegEx`: Básicos
+
+- Expresiones básicas
+  - `.` Cualquier carácter.
+  - `[ ]` Cualquier carácter incluido en los corchetes, e.g. `[xyz]`, `[a-zA-Z0-9-]`.
+  - `[^ ]` Cualquier caracter individual que n esté en los corchetes, e.g. `[^abc]`. También puede indicar inicio de líınea (fuera de los corchetes.).
+
+- `\( \)` ó `( )` crea una subexpresión que luego puede ser invocada con `\n` donde `n` es el número de la subexpresión.
+
+- `{m,n}` Repite lo anterior un número de al menos `m` veces pero no mayor a `n` veces.
+
+- `\b` representa el límite de palabra.
+
+
+## `RegEx`: Ejemplos
+
+- username: `[a-z0-9 -]{3,16}`
+
+- contraseña: `[a-z0-9 -]{6,18}`
+
+- IP address: `(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`
+
+- fecha (`dd/mm/yyyy`): ???
+
+- email (`adolfo@itam.edu`) : ???
+
+- URL (`http://gmail.com`): ???
+
+
+
+## Ejemplos
+
+Con esta cadena haremos varias manipulaciones:
+
+```{r}
+cadena <- "Cadena de ejemplo. A veces se le llama STRING. Y puede tener todo lo que quieran como fechas: 04/02/1978 o números: 23.578 o incluisive pesos: $32 MXP."
+```
+```{r}
+## Convertir a minúsculas
+stringr::str_to_lower(cadena)
+```
+
+```{r}
+## Pegar cadenas
+otra_cadena <- "Esta cadena es anexa."
+
+paste(cadena, otra_cadena, sep = "###")
+```
+
+## ¿Qué podemos hacer con `regex`?
+
+- Identificar un *match* con un patrón (`pattern`)
+    - `grep(..., value = FALSE)`, `stringr::str_detect`
+- Extraer un *match* con un patrón
+    - `grep(..., value=TRUE)`, `stringr::str_extract`, `stringr::str_extract_all`
+- Localizar un patrón en una cadena
+    - `stringr::str_locate`, `stringr::str_extract_all`,
+- Reemplazar un patrón
+    - `stringr::str_replace`, `stringr::str_replace_all`, `gsub`
+- Partir una cadena usando un patrón
+    - `stringr::str_split`, `strsplit`
+
+
+## Ejemplos
+
+```{r}
+## Dividiendo por palabras
+stringr::str_split(string = cadena, pattern = " ")  
+## pattern es una expresión regular ...
+```
+
+```{r}
+## Extrayendo las fechas del texto
+stringr::str_extract_all(string=cadena, pattern="[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}")[[1]]
+```
+## Ejemplos
+
+```{r}
+## Substituyendo
+stringr::str_replace_all(string=cadena, pattern = "\\$([0-9]*) MXP", replacement = "\\1 pesos mexicanos")
+```
+
+```{r}
+## Un ejemplo ligeramente más complicado
+fecha <- stringr::str_split(stringr::str_extract(cadena, "[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}"), "/")[[1]]
+names(fecha) <- c("dia", "mes", "año")
+fecha
+```
+
+
+
+# Ajustando datos: `tidyr`
+
+## Instalación
+
+```{r}
+if(!require(tidyr)){
+    install.packages('tidyr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
+    library(tidyr)
+}
+```
+
+## ¿Qué es un *dataset* `tidy`?
+
+Son conjuntos de datos ordenados en la siguiente forma
+
+Físicamente | Significado
+------------|-------------
+Tabla/archivo| *Data set*
+Filas        | Observación
+Columnas     | Variables
+Celda        | Valor
+
+- Datos en este ordenamiento son más fáciles de manipular, graficar y analizar.
+
+- Cada columna será un vector atómico y podremos aprovechar las operaciones vectorizadas de `R`
+
+## `tidyr`
+
+- Nos permite manipular datos para que tengan la forma `tidy`
+
+- Tiene cuatro funciones principales
+
+    - `gather`: Convierte *data sets* de formato *wide* a *long*
+    - `spread`: Convierte *data sets* de formato *long* a *wide*
+    - `unite`: Junta dos o más columnas
+    - `separate`: Divide una columna en dos o más
+
+## Ejemplos
+
+- Usaremos la base de datos de `mtcars`
+
+```{r}
+data(mtcars)
+?mtcars
+head(mtcars)
+```
+
+## Ejemplos
+
+Nota como el nombre del carro **no** es una columna, es el *nombre del renglón*. Arreglemos eso.
+
+```{r}
+mtcars$car <- rownames(mtcars) # Agregamos la columna car
+mtcars <- mtcars[,c(12, 1:11)] # Reordenamos las columnas
+row.names(mtcars) <- NULL  # Removemos los rownames
+head(mtcars)
+```
+
+## Ejemplo
+
+Convertimos a *long* usando `car` como pivote.
+
+```{r}
+head(gather(mtcars, variable, value, -car))
+```
+
+También podemos tener más columnas como pivote
+
+```{r}
+head(gather(mtcars, variable, value, mpg:gear))
+```
+
+## Ejemplo
+
+```{r}
+mtcars_long <- gather(mtcars, variable, value, -car)
+
+head(spread(mtcars_long, variable, value))  # Lo regresamos a su forma original
+```
+
+## Ejemplo
+
+```{r}
+(mtcars <- separate(mtcars, car, sep = ' ', into = c('marca'), remove=FALSE))
+```
+
+
+
+# Manipulando datos: `dplyr`
+
+## Instalación
+
+```{r}
+if(!require(dplyr)){
+    install.packages('dplyr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
+    library(dplyr)
+}
+```
+
+## `dplyr`
+
+- Es una biblioteca que nos permite **transformar** *data sets*  para realizar análisis
+
+- Sus funciones principales, reflejan los cinco verbos de la manipulación de datos:
+    - `select`: Seleccionas columnas
+    - `filter`: Seleccionas renglones
+    - `mutate`: Cambias/Creas valores en las columnas
+    - `arrange`: Ordenas las filas usando columnas
+    - `summarize`: Cálculo de resúmenes
+    
+## `dplyr`
+
+- Además de esas funciones tiene algunas más muy interesantes:
+    - `tbl_df`: Mejora la presentación de un `data.frame` 
+    - `rename`: Renombra columnas
+    - `glimpse`: Estructura del `data.frame`
+    - `group_by`: Agrupa el `data.frame` por columnas
+    - `src_sqlite`, `src_postgres`, `src_mysql`: Permite hacer un *wrap* de una tabla en la base de datos como si fuera un `data.frame`
+        - Soporta además `big query`, `hive`, `cloudera impala` etc.
+    
+## Ejemplo
+
+Siguiendo con `mtcars`
+
+```{r}
+(mtcars_tbl <- tbl_df(mtcars))
+```
+## Ejemplo
+
+Y su estructura
+
+```{r}
+glimpse(mtcars_tbl)
+```
+
+## Ejemplo: Select
+
+```{r}
+# Columnas car y mpg
+head(select(mtcars_tbl, car, mpg))
+```
+
+## Ejemplo: Select
+
+
+```{r}
+# Columnas que no estén entre disp y gear
+head(select(mtcars_tbl, -(disp:gear)))
+```
+
+## Ejemplo: Select
+
+
+```{r}
+# Columnas que empiecen con 'c'
+head(select(mtcars_tbl, starts_with('c')))
+```
+
+
+## Ejemplo: Filter
+
+```{r}
+filter(mtcars_tbl, mpg > 19)
+```
+## Ejemplo: Filter
+
+```{r}
+filter(mtcars_tbl, mpg > 19 & wt > 2)
+```
+
+## Ejemplo: mutate
+
+```{r}
+# La columna am es horrible, arreglemos
+mutate(mtcars_tbl, am_fix = ifelse(am==1, 'manual', 'automático'))
+```
+
+## Ejemplo: mutate
+
+```{r}
+# Puedes utilizar 'am' en lugar de 'am_fix'
+(mtcars_tbl<- mutate(mtcars_tbl, am = ifelse(am==1, 'manual', 'automático')))
+```
+
+## Ejemplo: mutate
+
+```{r}
+# car no es un factor
+(mtcars_tbl <- mutate(mtcars_tbl, car = as.factor(car)))
+```
+
+## Ejemplo: group_by y summarise
+
+```{r}
+mtcars_by_am <- group_by(mtcars_tbl, am) # Grouped data.frame
+arrange(summarise(mtcars_by_am, am_count = n()), desc(am_count))
+```
+
+```{r}
+summarise(mtcars_by_am, mean_mpg = mean(mpg, na.rm=TRUE), max_wt = max(wt), min_wt=min(wt))
+```
+
+## Ejemplo: Varios
+
+```{r}
+# Renombramos la columna car
+rename(mtcars_tbl, automóvil = car)
+```
+
+## Ejemplo: Varios
+
+```{r}
+# Ordenamos la tabla de mayor a menor en la columna mpg
+arrange(mtcars_tbl, desc(mpg))
+```
+
+# Graficando: `ggplot`
+
+## Instalación
+    
+```{r}
+if(!require(ggplot2) | !require(ggthemes)){
+    install.packages(c('ggplot2', 'ggthemes'), dependencies = TRUE, repos = "http://cran.us.r-project.org")
+    library(ggplot2)
+    library(ggthemes)
+}
+```
+
+## `ggplot`
+
+- Define una **gramática** para *construir* gráficas.
+
+- Hay que pensarlo como bloques de *lego* o *capas*
+
+## Ejemplos
+
+```{r}
+ggplot(mtcars, aes(x=car, y=mpg)) + geom_bar(stat ='identity')
+```
+
+
+
+## Ejemplos
+
+```{r, eval=FALSE}
+## Mas capas
+ggplot(mtcars, aes(x=car, y=mpg)) + geom_bar(stat ='identity', fill="#005533") +
+    labs(x = 'Automóvil', y='Millas por galón', title='MPG vs Automóvil') +
+    theme(axis.text.x = element_text(angle=90, hjust=1.0, size=9)) +
+    theme_hc() # Tema ver ?ggthemes
+```
+
+## Ejemplos
+
+```{r, echo=FALSE}
+## Mas capas
+ggplot(mtcars, aes(x=car, y=mpg)) + geom_bar(stat ='identity', fill="#005533") +
+    labs(x = 'Automóvil', y='Millas por galón', title='MPG vs Automóvil') +
+    theme(axis.text.x = element_text(angle=90, hjust=1.0, size=9)) +
+    theme_hc() # Tema ver ?ggthemes
+```
+
+
+
+## Ejemplos
+
+```{r, eval=FALSE}
+## Scatterplot
+ggplot(data = mtcars, mapping = aes(x = wt, y = mpg)) + geom_point(aes(size=cyl, color=marca)) + 
+    geom_text(aes(label=car, vjust=-1.0, hjust=0, alpha=0.5)) +
+    guides(fill=FALSE, alpha=FALSE, color=FALSE) + 
+    labs(x = 'Peso (1000 lb)', y = 'Millas por galón', size='Cilindros' ) + theme_hc()
+```
+
+
+## Ejemplos
+
+```{r, echo=FALSE}
+## Scatterplot
+ggplot(data = mtcars, mapping = aes(x = wt, y = mpg)) + geom_point(aes(size=cyl, color=marca)) + 
+    geom_text(aes(label=car, vjust=-1.0, hjust=0, alpha=0.5)) +
+    guides(fill=FALSE, alpha=FALSE, color=FALSE) + 
+    labs(x = 'Peso (1000 lb)', y = 'Millas por galón', size='Cilindros' ) + theme_hc()
+```
+
+
+
+# Lecturas Recomendadas
+
+## Sobre idiosincracias de `R`
+
+- [The R Inferno](http://www.burns-stat.com/documents/books/the-r-inferno/)
+
+- [Rbitrary Standards](https://ironholds.org/projects/rbitrary/)
+
+## Expresiones Regulares
+
+- [The 30 minute regex tutorial](http://tutorialzine.com/2014/12/learn-regular-expressions-in-20-minutes/)
+
+- [The 30 minute regex tutorial](http://www.codeproject.com/Articles/9099/The-Minute-Regex-Tutorial)
+
+- [Online regex tester and debugger](https://regex101.com/)
+
+## Manipulación de Cadenas y textos
+
+- [Handling and processing strings in R](http://gastonsanchez.com/Handling_and_Processing_Strings_in_R.pdf)
+
+# Sneak preview
+
+## Taller avanzado de R
+
+- 3 casos de estudio
+
+- Tidy -> Manipulación -> Visualización
+
+- Modelado
+
+- Presentaciones y Aplicaciones
+
+- Quizá: Algo GIS, Algo de Simulación, Algo de scrapping
+
+# ¿Preguntas?
+
+
+# ¡Gracias!
