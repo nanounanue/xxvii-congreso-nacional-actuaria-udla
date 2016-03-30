@@ -4,6 +4,16 @@ Adolfo De Unánue T.
 
 # Introducción
 
+## Mi nombre es...
+
+- Adolfo De Unánue Tiscareño
+
+- Director Académico de MCDatos - ITAM
+
+- CTO Klustera
+
+- CTO Grillo
+
 ## Repositorio
 
 * Página: `https://github.com/nanounanue/xxvii-congreso-nacional-actuaria-udla/tree/master`
