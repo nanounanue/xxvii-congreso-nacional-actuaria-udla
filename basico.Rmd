@@ -85,6 +85,8 @@ Tomado de **Hands on Programming with R** de *Garrent Grolemund*
 
 **L**oop
 
+# R vs ...
+
 # Bases del Lenguaje
 
 ## En `R` todo son
