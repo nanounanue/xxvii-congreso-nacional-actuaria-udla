@@ -12,7 +12,6 @@ output:
     widescreen: yes
 github: nanounanue
 twitter: '@nano_unanue'
-runtime: shiny
 ---
 
 # Introducción
@@ -332,7 +331,7 @@ summary(x) # O una descripción estadística completa
 
 Y se puede analizar visualmente también:
 
-```{r}
+```{r barplot}
 names(x) <- c("algo", "otro", "manzanas", "peras", "quesos", "jitomates")
 barplot(x) 
 ```
@@ -341,7 +340,7 @@ barplot(x)
 
 Si tienes dos variables
 
-```{r}
+```{r scatterplot}
 y <- rnorm(1000, mean= 0, sd=1)  # Genero números aleatorios distribuidos normalmente (*)
 x <- rnorm(1000, mean=3, sd=1)
 plot(x,y, main="Scatterplot")
@@ -469,7 +468,7 @@ prop.table(t, 2)
 
 LA representación visual de un factor es una gráfica de barras
 
-```{r}
+```{r tabla}
 plot(f, main = "Género")
 ```
 
@@ -1073,7 +1072,7 @@ if(!require(ggplot2) | !require(ggthemes)){
 
 ## Ejemplos
 
-```{r}
+```{r simple}
 ggplot(mtcars, aes(x=car, y=mpg)) + geom_bar(stat ='identity')
 ```
 
@@ -1091,7 +1090,7 @@ ggplot(mtcars, aes(x=car, y=mpg)) + geom_bar(stat ='identity', fill="#005533") +
 
 ## Ejemplos
 
-```{r, echo=FALSE}
+```{r mpg_by_car, echo=FALSE}
 ## Mas capas
 ggplot(mtcars, aes(x=car, y=mpg)) + geom_bar(stat ='identity', fill="#005533") +
     labs(x = 'Automóvil', y='Millas por galón', title='MPG vs Automóvil') +
@@ -1114,7 +1113,7 @@ ggplot(data = mtcars, mapping = aes(x = wt, y = mpg)) + geom_point(aes(size=cyl,
 
 ## Ejemplos
 
-```{r, echo=FALSE}
+```{r wt_to_mpg, echo=FALSE}
 ## Scatterplot
 ggplot(data = mtcars, mapping = aes(x = wt, y = mpg)) + geom_point(aes(size=cyl, color=marca)) + 
     geom_text(aes(label=car, vjust=-1.0, hjust=0, alpha=0.5)) +
