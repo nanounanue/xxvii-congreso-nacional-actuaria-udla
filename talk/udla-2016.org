@@ -394,8 +394,11 @@ municipio                                        |
 
 - /Co-veillance/
 
-* [[./imagenes/SurSousVeillanceByStephanieMannAge6.png]]
+* Co-veillance
 
+[[./imagenes/SurSousVeillanceByStephanieMannAge6.jpg]]
+
+#+REVEAL_HTML: <small><i>Dibujo de Stephanie Mann (6 años)</i>, Tomada de la Wikipedia</small>
 
 ** SAT
 
