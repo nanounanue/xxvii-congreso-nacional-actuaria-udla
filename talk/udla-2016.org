@@ -187,6 +187,22 @@ sólo quiero establecer ejemplos de qué se puede hacer en las circunstancias qu
 
 *** *DEMO*: Con producto de datos
 
+*** Proyecto conjunto INECOL - ITAM
+
+- Dr. Miguel Equihua, **INECOL**
+
+- Dr. Octavio Pérez-Maqueo, **INECOL**
+
+*** [[./imagenes/luigi_c.png]]
+
+
+*** [[./imagenes/luigi_a.png]]
+
+*** [[./imagenes/graphdb_b.png]]
+
+*** [[./imagenes/graphdb_sim_articulos.png]]
+
+
 ** Control (intento de...)
 
 *** ¿Control?
