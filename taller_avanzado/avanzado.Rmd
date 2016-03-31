@@ -1,0 +1,571 @@
+---
+title: "Taller avanzado de R"
+author: "Adolfo De Unánue T."
+date: "31 de marzo de 2016"
+output:
+  ioslides_presentation:
+    css: css/udla-actuaria.css
+    smaller: true
+    fig_width: 8.5
+    keep_md: yes
+    transition: slower
+    widescreen: yes
+github: nanounanue
+twitter: '@nano_unanue'
+---
+
+# Introducción
+
+## Repositorio
+
+* Página: `https://github.com/nanounanue/xxvii-congreso-nacional-actuaria-udla/tree/master`
+
+* Repo: `git@github.com:nanounanue/xxvii-congreso-nacional-actuaria-udla.git`
+
+* [Descargar `zip`](https://github.com/nanounanue/xxvii-congreso-nacional-actuaria-udla/archive/master.zip)
+
+
+## Instalamos los paquetes
+
+```{r,error=FALSE, warning=FALSE, message=FALSE, results='hide'}
+instalar <- function(paquete) {
+    
+    if (!require(paquete,character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)) {
+        install.packages(as.character(paquete), dependecies = TRUE, repos = "http://cran.us.r-project.org")
+        library(paquete, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
+    }
+}
+
+paquetes <- c('lubridate', 'ggvis', 'dplyr', 'tidyr', 'readr', 'rvest', 
+              'ggplot2', 'stringr', 'babynames', 'ggthemes', 'ggogleVis')
+
+lapply(paquetes, instalar)
+
+options(digits = 3)
+```
+
+
+
+# Ciencia de datos
+
+
+## Actividades de la ciencia de datos
+
+1. Leer un conjunto de datos
+2. Limpiarlo
+3. Manipularlo
+4. Explorarlo
+4. Guardarlo
+4. Modelarlo
+4. Comunicarlo
+4. Productificarlo
+
+
+## Dataset
+
+* Vamos a utilizar un conjunto de datos (_data set_) que describe los accidentes en trenes en 2015. 
+
+* Lo obtuve de esta página [FRA Office of Safety Analysis Web Site](http://safetydata.fra.dot.gov/officeofsafety/default.aspx)
+    - En el menú de `Downloads` y seleccioné **Accident Data as reported by Railroads**.
+    - Elegí los parámetros por default, y pedí que la descarga fuera en formato `TXT` (en realidad es un `csv`).
+
+* Ya se encuentra en la carpeta `data`.
+
+* El significado de cada columna se puede ver en el archivo `accfile_ThruMay2011.pdf` en la carpeta del proyecto.
+
+
+## Columnas interesantes
+
+ Nos quedaremos con las siguientes columnas
+
+| Nombre de columna | Número de columna | Variable                |
+|-------------------+-------------------+-------------------------|
+| YEAR              |                16 | year of incident        |
+| MONTH             |                17 | month of incident       |
+| DAY               |                18 | day of incident         |
+| TIMEHR            |                19 | hour  of incident       |
+| TIMEMIN           |                20 | minutes of incident     |
+| AMPM              |                21 | ampm                    |
+| TYPE              |                22 | type of accident        |
+| CARS              |                23 | cars hazmat             |
+| CARSDMG           |                24 | cars hazmat damaged     |
+
+## Columnas interesantes (cont)
+| Nombre de columna | Número de columna | Variable                |
+|-------------------+-------------------+-------------------------|
+| CARSHZD           |                25 | cars hazmat realeased   |
+| EVACUATE          |                26 | persons evacuated       |
+| STATION           |                28 | nearest city            |
+| STATE             |                30 | state  (FIPS)           |
+| TEMP              |                31 | temperature             |
+| VISIBLTY          |                32 | visibility              |
+| WEATHER           |                33 | weather                 |
+| TRNSPD            |                34 | train speed             |
+| TYPSPD            |                35 | train speed type        |
+| TRNDIR            |                37 | train direction         |
+
+## Columnas interesantes (cont)
+
+| Nombre de columna | Número de columna | Variable                |
+|-------------------+-------------------+-------------------------|
+| TONS              |                38 | tonnage                 |
+| TYPEQ             |                39 | train type              |
+| RRCAR1            |                45 | car initials 1          |
+| CARNBR1           |                46 | car number 1            |
+| POSITON1          |                47 | car position in train 1 |
+| LOADED1           |                48 | car loaded or not 1     |
+| RRCAR2            |                49 | car initials 2          |
+| CARNBR2           |                50 | car number 2            |
+| POSITON2          |                51 | car position in train 1 |
+| LOADED2           |                52 | car loaded or not 1     |
+
+## Columnas interesantes (cont)
+| Nombre de columna | Número de columna | Variable                |
+|-------------------+-------------------+-------------------------|
+| CAUSE             |                75 | primary cause           |
+| CAUSE2            |                76 | secondary cause         |
+| CASKLD            |                79 | killed                  |
+| CASINJ            |                80 | injured                 |
+| ACCDMG            |                85 | total damage ($)        |
+| CNTYCD            |               115 | county (FIPS)           |
+| ALCOHOL           |               117 | positive alcohol tests  |
+| DRUG              |               118 | positive drug tests     |
+| Latitude          |               139 | lat                     |
+| Longitud          |               140 | long                    |
+
+
+## Leer
+
+El primer paso es _cargar_ el data set a `R`
+
+```{r}
+(accidents.df <- read_csv(file="data/1417426.txt")) ## Estamos usando el paquete readr
+```
+
+## Ejercicio
+
+- ¿Cuántos accidentes están reportados? 
+
+- ¿Cuántas variables tiene el data set?
+
+## Leer
+
+La estructura del data set se puede obtener con `glimpse`
+
+```{r}
+glimpse(accidents.df)
+```
+
+## Leer
+
+* `R` también puede leer datos desde la web, scrapear, usar bases de datos, leer archivos de Excel, etc. 
+
+* Algo de esto usaremos en los casos de estudio
+
+# Limpieza
+
+## Manipular
+
+* Como puedes observar, los datos (cuando existen), regularmente son una porqueria. Es necesario **manipularlos**: Limpiarlos  y acomodarlos para que puedan servir al análisis.
+
+* Para esto utilizaremos dos _bibliotecas_ de funciones: `dplyr` y `tidyr`. 
+
+* Siempre es útil tener a la mano [esto](https://docs.google.com/viewer?url=https%3A%2F%2Fwww.rstudio.com%2Fwp-content%2Fuploads%2F2015%2F02%2Fdata-wrangling-cheatsheet.pdf).
+
+## Manipular
+
+* `dplyr` maneja 5 verbos para la manipulación de los datos.
+
+    - `filter`
+    - `select`
+    - `mutate`
+    - `arrange`
+    - `summarize`
+
+Además `dplyr` popularizó el operador de _entubamiento_ : `%>%`.
+    
+## Manipular
+
+Nuestro plan de batalla será el siguiente:
+
+1. Quitar las columnas que no nos parecen interesantes.
+2. Ajustar el _tipo_ de las columnas para su mejor representación.
+3. Crear y/o limpiar columnas
+
+## Manipular
+
+```{r}
+accidents <- accidents.df %>%
+    select(YEAR:EVACUATE, STATION, STATE:TYPSPD, TRNDIR:TYPEQ, 
+           RRCAR1:LOADED2, CAUSE, CAUSE2, CASKLD, CASINJ, 
+           ACCDMG, CNTYCD, ALCOHOL, DRUG, Latitude, Longitud)
+
+```
+
+## Ejercicio
+
+- Renombra las columnas para que tengan sentido:
+
+- Todo a minúsculas
+
+- `car_initials_1=RRCAR1, car_number_1=CARNBR1, car_initials_2=RRCAR2, car_number_2=CARNBR2,`
+  `accident_type=TYPE, cars_hazmat=CARS, cars_hazmat_damaged=CARSDMG, cars_hazmat_realeased=CARSHZD,`
+  `persons_evacuated=EVACUATE, nearest_city=STATION, state=STATE, temperature=TEMP, visibility=VISIBLTY,`
+  `weather=WEATHER, train_speed=TRNSPD, train_speed_type=TYPSPD, train_direction=TRNDIR, tonnage=TONS,` 
+  `train_type=TYPEQ, primary_cause=CAUSE, secondary_cause=CAUSE2, killed=CASKLD, injured=CASINJ, lat=Latitude, long=Longitud`
+  `car_position_1=POSITON1, car_loaded_1=LOADED1, car_position_2=POSITON2, car_loaded_2=LOADED2, total_damage=ACCDMG,`
+  `county=CNTYCD, alcohol=ALCOHOL, drugs=DRUG`
+
+
+```{r, echo=FALSE}
+accidents <- accidents %>% 
+        rename(year=YEAR, month=MONTH, day=DAY, hour=TIMEHR, minutes=TIMEMIN, ampm=AMPM,
+                car_initials_1=RRCAR1, car_number_1=CARNBR1, car_initials_2=RRCAR2, car_number_2=CARNBR2,
+                accident_type=TYPE, cars_hazmat=CARS, cars_hazmat_damaged=CARSDMG, cars_hazmat_realeased=CARSHZD,
+                persons_evacuated=EVACUATE, nearest_city=STATION, state=STATE, temperature=TEMP, visibility=VISIBLTY,
+                weather=WEATHER, train_speed=TRNSPD, train_speed_type=TYPSPD, train_direction=TRNDIR, tonnage=TONS,
+                car_position_1=POSITON1, car_loaded_1=LOADED1, car_position_2=POSITON2, car_loaded_2=LOADED2, 
+                total_damage=ACCDMG, county=CNTYCD, alcohol=ALCOHOL, drugs=DRUG,train_type=TYPEQ, primary_cause=CAUSE, 
+               secondary_cause=CAUSE2, killed=CASKLD, injured=CASINJ, lat=Latitude, long=Longitud)
+```
+
+## Manipular
+
+Muchas variables son categóricas, pero nuestro _data set_ las tiene como caracteres. Arreglémos eso.
+
+```{r}
+accidents <- accidents %>% 
+  mutate(car_id_1 = paste(car_initials_1, car_number_1, sep="-"), 
+         car_id_2 = paste(car_initials_2, car_number_2, sep="-"),
+         hour = ifelse(ampm=='AM', hour, hour+12),
+         timestamp = ymd_hm(paste(year,month,day,str_pad(hour, 2, 'left', '0'), str_pad(minutes, 2, 'left', '0'))),
+         year = year(timestamp), month=month(timestamp, label=TRUE, abbr=TRUE), 
+         day=day(timestamp), wday=wday(timestamp, label=TRUE, abbr=TRUE), hour=hour(timestamp), minutes=minute(timestamp)) %>% 
+         mutate_each(funs(as.factor), c(ampm, nearest_city, state, car_id_1, car_id_2, accident_type))
+```
+
+* Ejercicio: ¿Qué otras variables son categóricas? Modifica el código para que así lo sea.
+* Ejercicio: Usa el pdf y agrega etiquetas a las variables categóricas
+* Ejercicio: ¿Cómo removemos `car.initials.x` y `car.number.x`?
+* Ejercicio: La temperatura está en Fahrenheit ¿Cómo la transformarías a Celsius?
+
+```{r, echo = FALSE}
+accidents <- accidents %>%
+    select(-contains('initials'), -contains('number')) %>%
+    mutate(temperature = round((temperature - 32)*5/9)) 
+```
+
+
+## Guardar
+
+Con lo que hemos hecho, es mejor guardar el avance que llevamos. Así, si posteriormente queremos regresar a este estado (si nos equivocamos o algo parecido) podrémos hacerlo.
+
+```{r}
+saveRDS(object = accidents, file="clean/accidents.rds")
+```
+
+Esto lo guardará en binario, en un formato específico de `R`.
+
+_Nota que_ `R` _también podrá guardar en Excel, csv, bases de datos, etc._
+
+# Análisis
+
+## Explorar: Estadistica descriptiva
+
+Ahora estamos listos para analizar, el primer paso es limpiar nuestro ambiente (no necesario, pero ampliamente recomendado)
+
+```{r}
+#rm(list=ls())
+```
+
+Y luego leer nuestro `data.frame`
+
+```{r}
+accidents <- readRDS("clean/accidents.rds")
+```
+
+## Explorar: Estadistica descriptiva
+
+Primero veamos el _data set_ completo
+
+```{r}
+# summary(accidents)
+```
+
+## Explorar: Estadistica descriptiva
+
+Pero es posible responder preguntas más específicas:
+
+* ¿Cuántos accidentes por estado y por tipo?
+
+```{r}
+accidents %>%
+  group_by(state, accident_type) %>%
+  summarize(n = n())
+```
+
+## Explorar: Estadistica descriptiva
+
+* ¿Cuál es el Top 5 de estados por accidentes?
+
+```{r}
+accidents %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  head()
+```
+
+## Explorar: Estadistica descriptiva
+
+* ¿Cuál es el mes con más accidentes? ¿Cuál es la temperatura promedio?
+
+```{r}
+accidents %>%
+  group_by(month) %>%
+  summarise(n = n(), mean_temperature = mean(temperature))
+```
+
+## Explorar: Estadistica descriptiva
+
+**Ejercicio:** 
+
+- ¿Cuál es el estado con más muertes? 
+- ¿Con más heridos? 
+- ¿La hora con mayor accidentes? 
+
+## Exploración visual
+
+Aunque ya vimos el sistema básico de graficación de `R`, ahora veremos dos _bibliotecas_ muy potentes: 
+
+* `ggplot`
+* `ggvis`
+
+Ambas están basadas en algo que se llama **gramática de graficación** y la idea principal es estar agregando capa a capa los elementos de una gráfica (datos, ejes, metadata, etc)
+
+
+## Explorar: ggplot 
+
+Empecemos con algo sencillo: Temperatura por mes
+```{r eval=FALSE}
+ggplot(data = accidents, aes(x=month, y=temperature)) + 
+         geom_point(alpha=.4, size=4, color="#880011", position=position_jitter()) + 
+           labs(x="Mes", y ="Temperatura (°C)", title="Temperatura 2015") 
+```
+
+
+
+## Explorar: ggplot 
+
+```{r temp_by_month, echo=FALSE}
+ggplot(data = accidents, aes(x=month, y=temperature)) + 
+         geom_point(alpha=.4, size=4, color="#880011", position=position_jitter()) + 
+           labs(x="Mes", y ="Temperatura (°C)", title="Temperatura 2015") 
+```
+
+
+
+## Explorar: ggplot 
+
+Para esta gráfica quizá es mejor mostrar un _boxplot_
+
+```{r eval=FALSE}
+ggplot(data = accidents, aes(x=month, y=temperature)) + 
+         geom_boxplot(outlier.colour = "blue") + 
+           labs(x="Mes", y ="Temperatura (°C)", title="Temperatura 2015")
+```
+
+
+## Explorar: ggplot 
+
+```{r temp_box_plot, echo=FALSE}
+ggplot(data = accidents, aes(x=month, y=temperature)) + 
+         geom_boxplot(outlier.colour = "blue") + 
+           labs(x="Mes", y ="Temperatura (°C)", title="Temperatura 2015")
+```
+
+
+## Explorar: ggplot 
+
+
+Pero extraño los puntos de temperatura...
+
+```{r, eval=FALSE}
+ggplot(data = accidents, aes(x=month, y=temperature)) + 
+    geom_boxplot(outlier.colour = "darkred") + 
+    geom_jitter(alpha=0.3, shape=16, position=position_jitter(0.2), color="#880011") + 
+    labs(x="Mes", y ="Temperatura (°C)", title ="Temperatura 2015")
+```
+
+## Explorar: ggplot 
+
+```{r temp_box_plot_2, echo=FALSE}
+ggplot(data = accidents, aes(x=month, y=temperature)) + 
+    geom_boxplot(outlier.colour = "darkred") + 
+    geom_jitter(alpha=0.3, shape=16, position=position_jitter(0.2), color="#880011") + 
+    labs(x="Mes", y ="Temperatura (°C)", title ="Temperatura 2015")
+```
+
+
+## Explorar: ggplot 
+
+Si no nos gusta el _tema_ de la gráfica, podemos cambiarlo a uno que más nos guste. 
+
+Los diferentes temas se pueden ver [aquí](https://github.com/jrnold/ggthemes).
+
+## Explorar: ggplot 
+
+```{r, eval=FALSE}
+ggplot(data = accidents, aes(x=month, y=temperature)) + 
+         geom_boxplot(outlier.colour = "darkred") + geom_jitter(alpha=0.3, shape=16, position=position_jitter(0.2), color="#880011") +
+           labs(x="Mes", y ="Temperatura (°C)", title = "Temperatura 2015") + theme_hc()
+``` 
+
+
+## Explorar: ggplot 
+
+```{r temp_box_plot_3, echo=FALSE}
+ggplot(data = accidents, aes(x=month, y=temperature)) + 
+    geom_boxplot(outlier.colour = "darkred") +
+    geom_jitter(alpha=0.3, shape=16, position=position_jitter(0.2), color="#880011") +
+    labs(x="Mes", y ="Temperatura (°C)", title = "Temperatura 2015") + theme_hc()
+``` 
+
+
+## Explorar: ggplot
+
+```{r, eval=FALSE}
+ggplot(data = accidents, aes(x=accident_type, y=killed)) + 
+    geom_boxplot(outlier.colour = "darkred") +
+    labs(x="Tipo de Accidente", y ="Decesos", title="Decesos por tipo de accidente") + 
+    theme_hc()
+``` 
+
+## Explorar: ggplot
+
+```{r killed, echo=FALSE}
+ggplot(data = accidents, aes(x=accident_type, y=killed)) + 
+    geom_boxplot(outlier.colour = "darkred") +
+    labs(x="Tipo de Accidente", y ="Decesos", title="Decesos por tipo de accidente") + 
+    theme_hc()
+``` 
+
+
+
+## Explorar: ggplot
+
+Es posible usar `dplyr` con `ggplot`
+
+```{r eval=FALSE}
+accidents %>%
+    group_by(state) %>% 
+    summarize(n_obs = n()) %>%  
+    arrange(desc(n_obs)) %>%
+    ggplot(aes(x=state, y = n_obs)) + 
+    geom_bar(stat="identity") + theme_hc() + 
+    labs(y="Número de Accidentes", x="Estado", title="Accidentes por Estado")
+```
+
+
+## Explorar: ggplot
+
+```{r accidents_by_state, echo=FALSE}
+accidents %>%
+    group_by(state) %>% 
+    summarize(n_obs = n()) %>%  
+    arrange(desc(n_obs)) %>%
+    ggplot(aes(x=state, y = n_obs)) + 
+    geom_bar(stat="identity") + theme_hc() + 
+    labs(y="Número de Accidentes", x="Estado", title="Accidentes por Estado")
+```
+
+
+## Explorar: ggplot
+
+**Ejercicio**: ¿Cómo arreglarías la gráfica de *Decesos por tipo de accidente*?
+
+**Ejercicio**: Toma un ejemplo de la sección de análisis exploratorio y gráficalo.
+
+
+
+
+## Explorar: ggplot
+
+Podemos profundizar el análisis, dividiendo por tipo de accidente
+
+```{r, eval=FALSE}
+accidents %>%
+  group_by(state, accident_type) %>% summarize(n_obs = n()) %>%  arrange(desc(n_obs)) %>%
+  ggplot(aes(x=state, y = n_obs)) + geom_bar(stat="identity") +  
+  labs(x="Estados", y="Número de Accidentes", title="Tipos de accidente por estado") + 
+  facet_wrap(~accident_type)
+```
+
+
+
+
+## Explorar: ggplot
+
+```{r accidents_type, echo=FALSE, fig.heigh=8, fig.width=10}
+accidents %>%
+  group_by(state, accident_type) %>% summarize(n_obs = n()) %>%  arrange(desc(n_obs)) %>%
+  ggplot(aes(x=state, y = n_obs)) + geom_bar(stat="identity") + ggtitle("Tipos de accidente por estado") + theme_hc() + 
+  labs(x="Estados", y="Número de Accidentes") + facet_wrap(~accident_type)
+```
+
+
+
+## Explorar: ggvis
+
+- `ggvis` es un paquete nuevo, pero es el futuro de `R` para graficar
+
+- `ggvis` soporta `pipelines` como lo hace `dplyr`y `tidyr`
+
+- Es reactivo (como `shiny`)
+
+
+## Explorar: ggvis
+
+Observa como es más natural integrar `ggvis` que `ggplot` con el operator `%>%`
+
+```{r}
+accidents %>%
+    group_by(state) %>% 
+    summarize(n_obs = n()) %>%  
+    arrange(desc(n_obs)) %>%
+    ggvis(~state, ~n_obs, fill := 'green') %>%
+    layer_bars()
+```
+
+## Explorar: Mapa
+
+Usando **GoogleMaps**
+
+```{r, eval=FALSE}
+plot(accidents %>% 
+         mutate(LatLong = paste(lat, long, sep=":")) %>% 
+         gvisMap(locationvar="LatLong", tipvar="injured",
+                 options = list(showTip=T, showLine=F, enableScrollWheel=TRUE,
+                           useMapTypeControl=T, width=1400,height=800))
+)
+```
+
+
+# Comunicar
+
+
+## Comunicar
+
+Este documento en particular, funciona con una extensión del lenguaje [`markdown`](http://es.wikipedia.org/wiki/Markdown), llamada `Rmd`. Esta extensión permite _embeber_ código de `R` y ejecutarlo en el documento. 
+
+
+## Comunicar
+
+Además el documento que estás viendo utiliza tecnología de `RStudio` llamada [`shiny`](http://shiny.rstudio.com/) la cual agrega interactividad a los documentos, además de permitir aplicaciones web completas.
+
+Puedes aprender más en esta liga [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+
+
+# ¿Preguntas?
+
+# ¡Gracias!
