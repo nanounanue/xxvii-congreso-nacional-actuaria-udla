@@ -4,7 +4,7 @@ author: "Adolfo De Unánue T."
 date: "30 de marzo de 2016"
 output:
   ioslides_presentation:
-    css: udla-actuaria.css
+    css: css/udla-actuaria.css
     smaller: true
     fig_width: 8.5
     keep_md: yes
