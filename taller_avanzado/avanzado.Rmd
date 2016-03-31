@@ -37,7 +37,7 @@ instalar <- function(paquete) {
 }
 
 paquetes <- c('lubridate', 'ggvis', 'dplyr', 'tidyr', 'readr', 'rvest', 
-              'ggplot2', 'stringr', 'babynames', 'ggthemes', 'ggogleVis')
+              'ggplot2', 'stringr', 'babynames', 'ggthemes', 'googleVis')
 
 lapply(paquetes, instalar)
 

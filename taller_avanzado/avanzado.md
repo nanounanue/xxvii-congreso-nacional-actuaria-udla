@@ -25,7 +25,8 @@ instalar <- function(paquete) {
     }
 }
 
-paquetes <- c('lubridate', 'ggvis', 'dplyr', 'tidyr', 'readr', 'rvest', 'ggplot2', 'stringr', 'babynames', 'ggthemes')
+paquetes <- c('lubridate', 'ggvis', 'dplyr', 'tidyr', 'readr', 'rvest', 
+              'ggplot2', 'stringr', 'babynames', 'ggthemes', 'googleVis')
 
 lapply(paquetes, instalar)
 
@@ -709,6 +710,8 @@ accidents %>%
 
 ![](avanzado_files/figure-html/accidents_type-1.png)\
 
+
+
 ## Explorar: ggvis
 
 - `ggvis` es un paquete nuevo, pero es el futuro de `R` para graficar
@@ -717,6 +720,185 @@ accidents %>%
 
 - Es reactivo (como `shiny`)
 
+
+## Explorar: ggvis
+
+Observa como es más natural integrar `ggvis` que `ggplot` con el operator `%>%`
+
+
+```r
+accidents %>%
+    group_by(state) %>% 
+    summarize(n_obs = n()) %>%  
+    arrange(desc(n_obs)) %>%
+    ggvis(~state, ~n_obs, fill := 'green') %>%
+    layer_bars()
+```
+
+<!--html_preserve--><div id="plot_id354633516-container" class="ggvis-output-container">
+<div id="plot_id354633516" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id354633516_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id354633516" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id354633516_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id354633516" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id354633516_download" class="ggvis-download" data-plot-id="plot_id354633516">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id354633516_spec = {
+  "data": [
+    {
+      "name": ".0/count1/stack2",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "stack_lwr_": "number",
+          "stack_upr_": "number"
+        }
+      },
+      "values": "\"x_\",\"stack_lwr_\",\"stack_upr_\"\n\"01\",0,33\n\"02\",0,1\n\"04\",0,8\n\"05\",0,22\n\"06\",0,52\n\"08\",0,19\n\"09\",0,1\n\"10\",0,2\n\"11\",0,4\n\"12\",0,8\n\"13\",0,27\n\"16\",0,5\n\"17\",0,124\n\"18\",0,52\n\"19\",0,14\n\"20\",0,32\n\"21\",0,11\n\"22\",0,28\n\"23\",0,4\n\"24\",0,8\n\"25\",0,9\n\"26\",0,11\n\"27\",0,16\n\"28\",0,13\n\"29\",0,22\n\"30\",0,10\n\"31\",0,33\n\"32\",0,5\n\"34\",0,32\n\"35\",0,7\n\"36\",0,36\n\"37\",0,13\n\"38\",0,9\n\"39\",0,34\n\"40\",0,13\n\"41\",0,9\n\"42\",0,38\n\"44\",0,2\n\"45\",0,11\n\"46\",0,3\n\"47\",0,25\n\"48\",0,128\n\"49\",0,8\n\"51\",0,15\n\"53\",0,13\n\"54\",0,10\n\"55\",0,16\n\"56\",0,15"
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"01\"\n\"02\"\n\"04\"\n\"05\"\n\"06\"\n\"08\"\n\"09\"\n\"10\"\n\"11\"\n\"12\"\n\"13\"\n\"16\"\n\"17\"\n\"18\"\n\"19\"\n\"20\"\n\"21\"\n\"22\"\n\"23\"\n\"24\"\n\"25\"\n\"26\"\n\"27\"\n\"28\"\n\"29\"\n\"30\"\n\"31\"\n\"32\"\n\"34\"\n\"35\"\n\"36\"\n\"37\"\n\"38\"\n\"39\"\n\"40\"\n\"41\"\n\"42\"\n\"44\"\n\"45\"\n\"46\"\n\"47\"\n\"48\"\n\"49\"\n\"51\"\n\"53\"\n\"54\"\n\"55\"\n\"56\""
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n0\n134.4"
+    }
+  ],
+  "scales": [
+    {
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "name": "x",
+      "type": "ordinal",
+      "points": false,
+      "padding": 0.1,
+      "sort": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "properties": {
+        "update": {
+          "stroke": {
+            "value": "#000000"
+          },
+          "fill": {
+            "value": "green"
+          },
+          "x": {
+            "scale": "x",
+            "field": "data.x_"
+          },
+          "y": {
+            "scale": "y",
+            "field": "data.stack_lwr_"
+          },
+          "y2": {
+            "scale": "y",
+            "field": "data.stack_upr_"
+          },
+          "width": {
+            "scale": "x",
+            "band": true
+          }
+        },
+        "ggvis": {
+          "data": {
+            "value": ".0/count1/stack2"
+          }
+        }
+      },
+      "from": {
+        "data": ".0/count1/stack2"
+      }
+    }
+  ],
+  "legends": [],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "layer": "back",
+      "grid": true,
+      "title": "state"
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "layer": "back",
+      "grid": true,
+      "title": "n_obs"
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "duration": 250,
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": 816,
+    "height": 432
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id354633516").parseSpec(plot_id354633516_spec);
+</script><!--/html_preserve-->
+
+## Explorar: Mapa
+
+Usando **GoogleMaps**
+
+
+```r
+plot(accidents %>% 
+         mutate(LatLong = paste(lat, long, sep=":")) %>% 
+         gvisMap(locationvar="LatLong", tipvar="injured",
+                 options = list(showTip=T, showLine=F, enableScrollWheel=TRUE,
+                           useMapTypeControl=T, width=1400,height=800))
+)
+```
 
 
 # Comunicar
