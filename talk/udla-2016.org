@@ -1,0 +1,434 @@
+#+Title:     Proyectos para un mejor gobierno
+#+Author:    Adolfo De Unánue
+#+Email:     @nano_unanue
+#+DATE:      UDLA, 31 de abril de 2016
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+PROPERTY: header-args    :cache yes
+#+PROPERTY: header-args:sh :results output :exports both :tangle no
+#+OPTIONS: reveal_center:t reveal_progress:t reveal_history:t reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: reveal_width:1200 reveal_height:800
+#+OPTIONS: toc:nil
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_TRANS: linear
+#+REVEAL_THEME: white
+#+REVEAL_HLEVEL: 2
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Ciencia de datos: Proyectos para un mejor gobierno">
+#+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+#+REVEAL_POSTAMBLE: <p> Creada por Adolfo De Unánue. </p>
+#+REVEAL_PLUGINS: (markdown notes zoom highlight search classList)
+#+REVEAL_EXTRA_CSS: css/udla.css
+
+
+** Bambalinas                                                      :noexport:
+
+#+begin_src sh :var TANGLED=(org-babel-tangle)
+  wc $TANGLED
+#+end_src
+
+* [[./imagenes/logo.jpg]]
+
+* Mi nombre es...
+
+- Adolfo De Unánue Tiscareño
+
+- Director Académico de MCDatos - ITAM
+
+- CTO Klustera
+
+- CTO Grillo
+
+#+REVEAL_HTML: <i class="fa fa-twitter"></i>    @nano_unanue &middot;
+
+#+REVEAL_HTML: <i class="fa fa-github"></i>     nanounanue &middot;
+
+#+REVEAL_HTML: <i class="fa fa-envelope"></i>   adolfo.deunanue@itam.mx
+
+
+** Marcus Aurelius
+
+/Todo lo que oímos es una opinión, no un hecho./
+
+/Todo lo que vemos es una perspectiva, no la verdad./
+
+* Una breve historia ...
+
+* ¿Data Science?
+
+*** ¿Data Science?
+
+Estudio *fenomenológico* de *Sistemas Complejos Adaptativos*, con el propósito de
+construir *productos de datos* que ayuden/soporten a la toma de decisiones y acciones
+sobre el sistema.
+
+*** ¿Data Science?
+
+- Para lograrlo utiliza:
+  - Computación
+  - Estadística
+
+
+*** Los eslabones de DS
+
+- Data $\to$ Información $\to$ Conocimiento $\to$ Sabiduría
+
+- Lo que medimos $\to$ /Awareness/ $\to$ Comprensión, Experiencia $\to$ Influencia, Eficacia
+
+- Situación $\to$ /Situation awareness/ $\to$ /Situation understanding/ $\to$ /Situation Control/
+
+- Data gathering, Data ingestion $\to$ Data Fusion $\to$ Data Analytics $\to$ Control
+
+*** ¿Y desde el otro lado?
+
+- Eso fué operativo (i.e. /lo que hacemos/)
+
+- La pregunta es /¿para qué lo hacemos?/
+
+  - La empresa, organización, institucion necesita soporte para:
+       - Medir, estimar, definir y seguir (/track/) Variables de interés
+       - Resolver preguntas estratégicas/tácticas (quizá operativas)
+       - Alcanzar (/if exists/) las metas de la organización
+
+*** Entonces...
+
+- Si la Ciencia de datos, no cumple con esto: *No sirve de mucho...*
+
+- La ciencia de datos tiene valor si genera entregables, consistentes con los objetivos estratégicos
+
+- La ciencia de datos ayuda a realizar el objetivo de *Control*
+
+- i.e. ayudar a tomar decisiones que permitan manipular el sistema de interés.
+
+*** ¿Control?: Cibernética
+
+- Rama de la ciencia que estudia las retroalimentaciones en los sistemas
+  - Inició en los 50s
+
+#+BEGIN_SRC ditaa :file imagenes/feedback_loop.png
+            +--------------+
+            |              |
+----+------>+    Planta    +---------+------->
+    ^       |              |         |
+    |       +--------------+         |
+    |                                |
+    |                                |
+    |       +--------------+         |
+    |       |              |         |
+    +-------+ Controlador  +---------+
+            |              |
+            +--------------+
+#+END_SRC
+
+- También llamado como *Teoría de Control*
+
+*** Otros
+
+- Simulación
+  - La simulación nos permite realizar /modelos descriptivos/, los cuales nos permiten, revisar varios escenarios, incluido el peor.
+  - En cambio la ciencia de datos nos da el punto de vista más probable.
+  - Cuando queremos tomar decisiones, nos interesa tener ambos puntos de vista
+
+- /Big data/
+
+- /Machine Learning/
+
+- /Data Viz/
+
+
+* DS =->=  Gov, Gov =->=  DS
+
+** Disclaimer
+
+Hay mucha gente trabajando en temas relacionados a este tema
+y en particular, haciendo cosas de mayor impacto. En lo que sigue,
+sólo quiero establecer ejemplos de qué se puede hacer en las circunstancias que discutiré.
+
+** Open data
+
+- Datos abiertos,  /per se/, no es DS.
+
+- Pero muchas personas, incluído yo, partimos de que el gobierno _libera_ datos, para hacer análisis.
+
+- Y a partir de aquí, ocurren una de las siguientes cosas:
+  - /Hacktivismo/
+  - Periodismo de datos
+  - Consultor para empresa privada
+  - Analista de gobierno
+
+- Algunos de esto no salen de los primeros eslabones de DS.
+
+*** Ejemplos
+
+- Cálculo de PIB a partir de imágenes espaciales de la NASA
+  - Carlos Petricioli, MCDatos, ITAM
+  - Recientemente hay una versión que ahora mide pobreza:
+    - /Transfer Learning from Deep Features for Remote Sensing and Poverty Mapping/, Xie et al, Standford, 2016.
+
+- Análisis complejo de los motivos y procesos de crimen organizado
+  - Roberto Sánchez, Mate/Políticas, ITAM
+  - Análisis geoespacial no trivial
+  - Análisis de teoría de juegos
+  - Ahora estamos trabajando en un /Flight Simulator/
+
+- Análisis de los factores que identifican la calificación de la magnitud de desastres en México.
+  - Andrea García, MCDatos, ITAM
+  - Bases de datos públicos y bases de datos de gobierno
+  - Lo está extendiendo a Resilencia en STI.
+
+
+*** *DEMO*: Sin producto de datos
+
+*** *DEMO*: Con producto de datos
+
+** Control (intento de...)
+
+*** ¿Control?
+
+- *Pitágoras*: Intentando agregar control
+
+  - Andrea Fernandez, Carlos Pérez, JP Oberhauser
+
+#+BEGIN_SRC ditaa :file imagenes/pitagoras_esquema.png
+
+
+                     +--------------+
+Municipio,           |              |
+Open Data----+------>+   Modelo I   +---------+------->  Necesidades-------+
+             ^       |              |         |              |             |
+             |       +--------------+         |              |             |
+             |                                |              |             |
+             |                                |              |             |
+             |       +--------------+         |              |             |
+             |       | Acciones     |         |              |             V
+             +-------+ Sugeridas    +---------+              |             X
+    +----------------+              |                        |             X
+    |                +--------------+                        |             ^
+    |                                                        |             |
+    +--------------------------------------------------------+             |
+    |                   +--------------+                                   |
+    v                   |              |                                   |
+Accioness-------------->+  Particular  +---------+-------> Ejecución proyectos
+seleccionadas           |              |         |
+por el                  +--------------+         |
+municipio                                        |
+    ^                                            |
+    X                                            |facturas,
+    |                   +--------------+         |evidencia,
+    V                   |              |         |evidencia ciudadana
+ Indicadores <----------+  Modelo II   +---------+
+    |                   |              |
+    |                   +--------------+
+    |
+    V
+ Portal Ciudadano
+#+END_SRC
+
+
+*** ¿Control?
+
+- *Pitágoras* : ¿Qué nos enseña?
+
+  - En realidad el producto de datos no buscaba /controlar/.
+  - /Sponsorship/ no es suficiente, se requiere *voluntad*
+  - Importancia de la visión global
+  - El beneficiario más importante del /open data/ debería de ser el mismo Gobierno.
+  - En realidad sufrimos visión fragmentada
+
+
+** Áreas de posible impactos
+- Política pública
+- Economía
+- Manufactura
+- Agricultura
+
+** Características
+- Multiagentes
+- Sistemas complejos adaptativos
+- /Networked/
+- Secuenciales
+- Incertidumbre
+- /Wicked Problems/
+
+* Introspección
+
+** Alan Ginsberg
+
+/Vi las mejores mentes de mi generación/
+
+/destruidas por la locura/,
+
+/hambrientas histéricas desnudas/,
+
+/arrastrándose por las calles .../
+
+*Aullido* (/Fragmento/)
+
+** Situación Actual
+
+- México se caracteriza por desconfianza generalizada.
+
+- Eso destruye el capital social de las instituciones.
+
+- Hay que invertir muchos recursos para aliviar la desconfianza
+
+- Estos se convierten en fondos susceptibles de nueva corrupción y generación de nueva desconfianza.
+
+*** Situación Actual
+#+ATTR_REVEAL: :frag (appear)
+  - Según el *IMCO* en su reporte en el 2015 sobre corrupción: /Transamos, pero no avanzamos/, la corrupción le cuesta a México:  890, 000, 000, 000 pesos / año
+
+  - Esto representa el 5% del PIB nacional.
+    - Algunos estimados indican que es el 10% del PIB.
+
+  - Es igual a 5 reformas fiscales, 87 presupuestos de la UNAM, 7.7 veces el presupuesto de SEDESOL y 3 veces el de la SEP.
+
+*** Situación Actual
+
+#+ATTR_REVEAL: :frag (appear)
+  - La unidad especializada en combate a crímenes cometidos por servidores públicos está compuesta por únicamente 12 individuos
+    - Esto es a nivel nacional, presupuesto: 26 millones de pesos.
+    - Como comparación, Singapur tiene 88 agentes y Hong Kong 1,415 agentes, con un presupuesto de 406 millones MXP y 2,000 millones MXP respectivamente.
+      - Nota que ambas son ciudades
+
+    - No estoy diciendo que la solución sea aumentar el presupuesto.
+
+    - Pero la solución propuesta por el Gobierno, nos lleva a ¿Quién vigila a los vigilantes? ¿Más vigilantes?
+
+*** Situación Actual
+
+- /Global Financial Integrity/ estimó, en 2012, que en el periodo de 1970 a 2010 800,000,000,000 USD se evadieron en impuestos.
+
+- [[http://aceproject.org/ace-en/focus/core/crb/crb03][Cada votante en México cuesta casi 6USD, en otros países de 1 a 3 USD]]
+
+- El sistema electoral cuesta 41,095,890 MXP al día, [[http://www.excelsior.com.mx/nacional/2015/08/28/1042713][15,000,000,000 MXP es el presupuesto para este año]]
+
+*** Situación Futura: ¿Qué estamos haciendo?
+#+ATTR_REVEAL: :frag (appear)
+  - Avances en robótica e Inteligencia Artificial y su impacto en la economía.
+    - ¿Qué haremos si nuestro salario (ya de por si bajo) no es competitivo? ¿Por qué apostamos a tecnologías obsoletas?
+
+  - Cambio climático
+    - El miércoles 3 de marzo de 2016, por primera vez superamos los 2° C arriba de normal en el hemisferio norte.
+    - ¿Qué tan vulnerable es México?¿Cuáles son los impactos?¿Cómo afectará nuestra economía?
+
+  - Sistema económico y financiero mundial
+
+  - Obviamente no estoy diciendo nada nuevo.
+
+* ¿Qué podemos hacer?
+
+* Wicked Problems
+   :PROPERTIES:
+   :reveal_data_state: alert
+   :END:
+
+
+** Sistemas Complejos
+#+ATTR_REVEAL: :frag (appear)
+  - Problemas: dinámica inestable
+  - Fallos en cascada
+  - Interdependencia sistémica.
+
+** Antoine de Saint-Exupery
+
+/As for the future, your task is not to foresee it/,
+
+/but to enable it/
+
+
+** Soluciones complejas
+
+- Ley de la variablidad de Ashby
+
+- BIM: Múltiples capas: Espaciales, temporales, dinero, grafos, manejo de restricciones.
+
+- GLEaM: Múltiples capas: Simulación, Modelado, Retroalimentación de datos, i.e. /Flight Simulator/
+
+- Estudios actuales: System Dynamics/ABM $\to$  /Flight simulator/ $\to$ Trabajo con Roberto Sánchez
+
+** Estructurales
+#+ATTR_REVEAL: :frag (appear)
+- =Blockchain=
+  - Notario distribuido
+  - Flujo transparente de transacciones
+  - Inmutable
+  - Gran bretaña
+    - Pilotos a partir de este año
+  - Honduras
+    - Registro de la propiedad en 2016
+  - Ambos proyectos para luchar contra la corrupción
+
+- =E-citizen=
+  - Implementado completamente en Estonia
+  - Privacidad basada en configuración
+    - Público quién consulta qué
+  - Registros bancarios, Impuestos, Comercios, Salud, Votaciones
+  - *INE*: ¿Oportunidad perdida?
+
+** Coordinación: Deep Reinforcement Learning
+
+- /Bullwhip effect/ en cadenas de manufactura (incluído producción agrícola)
+  - Fernanda Durand, MCDatos, ITAM
+
+- ¿Economía planeada distribuida?
+  - La versión centralizada se intentó en URSS en los *50s-60s*: /Kantorovich/.
+  - Se intentó en Chile a principios de los *70s*: =Cybersyn=
+  - /Economic reasoning and AI/ Parkes et al., Science, 2015
+
+** Localidad: Big data & Little data
+
+- Privacidad
+
+- [[http://www.nervousnet.ethz.ch/][Social senging: /NervousNet/]]
+  - ETH Suiza, *FuturICT*
+
+- ¿Asistentes virtuales?
+  - Relacionado con uno de los demos de arriba
+
+- /Co-veillance/
+
+* [[./imagenes/SurSousVeillanceByStephanieMannAge6.png]]
+
+
+** SAT
+
+- ¿A dónde va exactamente cada peso pagado? ¿Quiénes son los beneficiaríos directos? ¿Cuánto reciben?
+
+- ¿Las organizaciones tienen evidencia que muestre el impacto de sus acciones?
+
+** Resilencia
+
+- ¿Cómo está conectada la ciudad de México? ¿De dónde llegan los alimentos? ¿Cuál es la cadena?
+
+- ¿Cuál es la resilencia? ¿La fragilidad? ¿Qué hacer para fortalecerla?
+
+- Lo mismo para México ¿Cuál es nuestra cadena de abastecimiento? ¿Qué tan frágil es ante crisis mundiales? ¿Es particularmente frágil para regiones? ¿Hay eventos que la favorecen?
+
+- ¿Cómo se forman clústers de economías?¿Cómo está ligado con la educación?¿Y la violencia?
+
+* Conclusión
+
+** A modo de cierre
+
+- Las restricciones de DS en gobierno, para que tengan impacto son las mismas que las de DS en una empresa privada
+  - Debe de tener impacto
+
+- Hay algo más allá que las visualizaciones
+  - Golpeo sin cambio, quizá no sea lo mejor
+
+- Generar memoria, confianza, transformación.
+
+** ¿Preguntas? ¿Comentarios? ¿Quejas?
+
+#+REVEAL_HTML: <i class="fa fa-twitter"></i>    @nano_unanue &middot;
+
+#+REVEAL_HTML: <i class="fa fa-github"></i>     nanounanue &middot;
+
+#+REVEAL_HTML: <i class="fa fa-envelope"></i>   adolfo.deunanue@itam.mx
