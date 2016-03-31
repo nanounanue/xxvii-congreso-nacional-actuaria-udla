@@ -639,9 +639,9 @@ names(df)
 ## Instalación
 
 ```{r}
-if(!require(lubridate)){
+if(!require(lubridate,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages('lubridate', dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(lubridate)
+    library(lubridate,quietly = TRUE, warn.conflicts = FALSE)
 }
 ```
 
@@ -733,9 +733,9 @@ round_date(inicio_taller, unit = 'month') # ¿Era lo que esperabas?
 ## Instalación
 
 ```{r}
-if(!require(stringr)){
+if(!require(stringr,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages('stringr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(stringr)
+    library(stringr,quietly = TRUE, warn.conflicts = FALSE)
 }
 ```
 
@@ -853,9 +853,9 @@ fecha
 ## Instalación
 
 ```{r}
-if(!require(tidyr)){
+if(!require(tidyr,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages('tidyr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(tidyr)
+    library(tidyr,quietly = TRUE, warn.conflicts = FALSE)
 }
 ```
 
@@ -941,9 +941,9 @@ head(spread(mtcars_long, variable, value))  # Lo regresamos a su forma original
 ## Instalación
 
 ```{r}
-if(!require(dplyr)){
+if(!require(dplyr,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages('dplyr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(dplyr)
+    library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 }
 ```
 
@@ -1069,10 +1069,10 @@ arrange(mtcars_tbl, desc(mpg))
 ## Instalación
     
 ```{r}
-if(!require(ggplot2) | !require(ggthemes)){
+if(!require(ggplot2,quietly = TRUE, warn.conflicts = FALSE) | !require(ggthemes,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages(c('ggplot2', 'ggthemes'), dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(ggplot2)
-    library(ggthemes)
+    library(ggplot2,quietly = TRUE, warn.conflicts = FALSE)
+    library(ggthemes,quietly = TRUE, warn.conflicts = FALSE)
 }
 ```
 

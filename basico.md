@@ -1146,14 +1146,10 @@ names(df)
 
 
 ```r
-if(!require(lubridate)){
+if(!require(lubridate,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages('lubridate', dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(lubridate)
+    library(lubridate,quietly = TRUE, warn.conflicts = FALSE)
 }
-```
-
-```
-## Loading required package: lubridate
 ```
 
 ## `lubridate`
@@ -1357,14 +1353,10 @@ round_date(inicio_taller, unit = 'month') # ¿Era lo que esperabas?
 
 
 ```r
-if(!require(stringr)){
+if(!require(stringr,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages('stringr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(stringr)
+    library(stringr,quietly = TRUE, warn.conflicts = FALSE)
 }
-```
-
-```
-## Loading required package: stringr
 ```
 
 ## ¿Por qué?
@@ -1523,14 +1515,10 @@ fecha
 
 
 ```r
-if(!require(tidyr)){
+if(!require(tidyr,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages('tidyr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(tidyr)
+    library(tidyr,quietly = TRUE, warn.conflicts = FALSE)
 }
-```
-
-```
-## Loading required package: tidyr
 ```
 
 ## ¿Qué es un *dataset* `tidy`?
@@ -1746,37 +1734,10 @@ head(spread(mtcars_long, variable, value))  # Lo regresamos a su forma original
 
 
 ```r
-if(!require(dplyr)){
+if(!require(dplyr,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages('dplyr', dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(dplyr)
+    library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 }
-```
-
-```
-## Loading required package: dplyr
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:lubridate':
-## 
-##     intersect, setdiff, union
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
 ```
 
 ## `dplyr`
@@ -2152,19 +2113,11 @@ arrange(mtcars_tbl, desc(mpg))
     
 
 ```r
-if(!require(ggplot2) | !require(ggthemes)){
+if(!require(ggplot2,quietly = TRUE, warn.conflicts = FALSE) | !require(ggthemes,quietly = TRUE, warn.conflicts = FALSE)){
     install.packages(c('ggplot2', 'ggthemes'), dependencies = TRUE, repos = "http://cran.us.r-project.org")
-    library(ggplot2)
-    library(ggthemes)
+    library(ggplot2,quietly = TRUE, warn.conflicts = FALSE)
+    library(ggthemes,quietly = TRUE, warn.conflicts = FALSE)
 }
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```
-## Loading required package: ggthemes
 ```
 
 ## `ggplot`
