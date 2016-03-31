@@ -25,8 +25,8 @@ instalar <- function(paquete) {
     }
 }
 
-paquetes <- c('lubridate', 'ggvis', 'dplyr', 'tidyr', 'readr', 'rvest', 
-              'ggplot2', 'stringr', 'babynames', 'ggthemes', 'googleVis')
+paquetes <- c('lubridate', 'magrittr', 'ggvis', 'dplyr', 'tidyr', 'readr', 'rvest', 
+              'ggplot2', 'stringr', 'babynames', 'ggthemes', 'googleVis', 'shiny')
 
 lapply(paquetes, instalar)
 
@@ -48,6 +48,45 @@ options(digits = 3)
 4. Modelarlo
 4. Comunicarlo
 4. Productificarlo
+
+# Pipelines
+
+## `%>%`
+
+Por que anidar, si podemos platicar
+
+
+```r
+# Normalmente
+mas <- function(x, y) x + y
+por <- function(x, y) x * y
+
+# 2 * 10 + 1
+# Dos por 10 mas 1
+mas(1, por(2, 10))
+```
+
+```
+## [1] 21
+```
+
+
+```r
+x %>% f(y) -> f(x, y)
+x %>% f(y) %>% g(z) -> g(f(x, y), z)
+```
+
+
+```r
+# Dos por 10 mas 1
+2 %>% 
+  por(10) %>%
+  mas(1)
+```
+
+```
+## [1] 21
+```
 
 
 ## Dataset
@@ -735,27 +774,31 @@ accidents %>%
     layer_bars()
 ```
 
-<!--html_preserve--><div id="plot_id354633516-container" class="ggvis-output-container">
-<div id="plot_id354633516" class="ggvis-output"></div>
+
+## Explorar: ggvis
+
+
+<!--html_preserve--><div id="plot_id615233085-container" class="ggvis-output-container">
+<div id="plot_id615233085" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id354633516_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id354633516" data-renderer="svg">SVG</a>
+<a id="plot_id615233085_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id615233085" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id354633516_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id354633516" data-renderer="canvas">Canvas</a>
+<a id="plot_id615233085_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id615233085" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id354633516_download" class="ggvis-download" data-plot-id="plot_id354633516">Download</a>
+<a id="plot_id615233085_download" class="ggvis-download" data-plot-id="plot_id615233085">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id354633516_spec = {
+var plot_id615233085_spec = {
   "data": [
     {
       "name": ".0/count1/stack2",
@@ -883,8 +926,194 @@ var plot_id354633516_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id354633516").parseSpec(plot_id354633516_spec);
+ggvis.getPlot("plot_id615233085").parseSpec(plot_id615233085_spec);
 </script><!--/html_preserve-->
+
+
+## Explorar: ggvis
+
+
+```r
+## Ejemplo tomado de Hadley Wickham 
+df <- data.frame(
+  x = runif(20),
+  y = runif(20),
+  dir_x = sample(c(-1, 1), 20, replace = TRUE),
+  dir_y = sample(c(-1, 1), 20, replace = TRUE),
+  velocity = runif(20, 0, 0.01)
+)
+mtc1 <- reactive({
+  invalidateLater(30, NULL)
+
+  df$x <<- df$x + df$dir_x * df$velocity
+  df$y <<- df$y + df$dir_y * df$velocity
+  df$dir_x <<- ifelse(df$x > 1, -1, ifelse(df$x < 0, 1, df$dir_x))
+  df$dir_y <<- ifelse(df$y > 1, -1, ifelse(df$y < 0, 1, df$dir_y))
+  df
+})
+mtc1 %>% ggvis(x = ~x, y = ~y) %>%
+  layer_points() %>%
+  scale_numeric("x", domain = c(0, 1)) %>%
+  scale_numeric("y", domain = c(0, 1)) %>%
+  set_options(duration = 0)
+```
+
+
+
+## Explorar: ggvis
+
+
+```
+## Warning: Can't output dynamic/interactive ggvis plots in a knitr document.
+## Generating a static (non-dynamic, non-interactive) version of the plot.
+```
+
+<!--html_preserve--><div id="plot_id537497863-container" class="ggvis-output-container">
+<div id="plot_id537497863" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id537497863_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id537497863" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id537497863_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id537497863" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id537497863_download" class="ggvis-download" data-plot-id="plot_id537497863">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id537497863_spec = {
+  "data": [
+    {
+      "name": ".0",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "x": "number",
+          "y": "number"
+        }
+      },
+      "values": "\"x\",\"y\"\n0.477194095880259,0.255096555140335\n0.374870349171106,0.831147149887402\n0.933522910184693,0.637540339420084\n0.00497799062170088,0.18156017081812\n0.914325436733197,0.117517020709347\n0.171859020651318,0.564147652774118\n0.180337762299459,0.534165378820617\n0.350979289656971,0.669657068874221\n0.687070325983223,0.00729637379990891\n0.558548384064343,0.263961025096942\n0.882324137638789,0.312471587124746\n0.827685378040187,0.943078157245182\n0.0613073939480819,0.296201286606956\n0.879144965575542,0.192150559879374\n0.227564131766558,0.950435742894188\n0.0263981715682894,0.13035205389373\n0.367810345506296,0.140038955006748\n0.510796354296617,0.504823770695366\n0.067232844105456,0.949673811055254\n0.134539443566464,0.419247840098105"
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n-0.05\n1.05"
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n-0.05\n1.05"
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "symbol",
+      "properties": {
+        "update": {
+          "fill": {
+            "value": "#000000"
+          },
+          "size": {
+            "value": 50
+          },
+          "x": {
+            "scale": "x",
+            "field": "data.x"
+          },
+          "y": {
+            "scale": "y",
+            "field": "data.y"
+          }
+        },
+        "ggvis": {
+          "data": {
+            "value": ".0"
+          }
+        }
+      },
+      "from": {
+        "data": ".0"
+      }
+    }
+  ],
+  "legends": [],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "layer": "back",
+      "grid": true,
+      "title": "x"
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "layer": "back",
+      "grid": true,
+      "title": "y"
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": 816,
+    "height": 432,
+    "duration": 0
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id537497863").parseSpec(plot_id537497863_spec);
+</script><!--/html_preserve-->
+
+
+
 
 ## Explorar: Mapa
 
