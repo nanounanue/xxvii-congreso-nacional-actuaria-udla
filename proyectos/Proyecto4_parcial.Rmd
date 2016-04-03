@@ -1,0 +1,21 @@
+---
+title: "Proyecto 4"
+author: "Adolfo J. De Unánue T."
+date: "3 de abril de 2016"
+output: html_document
+---
+
+# Proyecto 4: ACLED: Armed Conflict Location & Event Data
+
+## Dataset
+
+[Data set](http://www.acleddata.com/data/version-6-data-1997-2015/)
+
+
+## Documentación
+
+[ACLED Codebook](./docs/ACLED_Codebook_2016.pdf)
+
+## Descarga 
+
+Descargar el CSV o el ZIP desde la página

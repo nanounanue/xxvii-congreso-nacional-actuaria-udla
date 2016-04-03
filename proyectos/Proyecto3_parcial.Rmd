@@ -1,0 +1,38 @@
+---
+title: "Proyecto 3"
+author: "Adolfo J. De Unánue T."
+date: "3 de abril de 2016"
+output: html_document
+---
+
+# Proyecto 3: WHO Tuberculosis 2014
+
+## Data set
+
+[Data set](https://extranet.who.int/tme/generateCSV.asp?ds=notifications)
+
+## Objetivo
+
+Limpiar el _data set_ (observa como la variable `genero` y `edad` están mezcladas en columnas como `m14`, usa `tidyr` para lograrlo). 
+
+Reproducir algunos análisis del reportde de la  *WHO* (_Organización Mundial de la Salud_) que se encuentran en la misma página del _data set_
+
+## Paquetes a usar
+
+```{r}
+rm(list=ls()) # Limpiamos todo
+library(readr)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(stringr)
+```
+
+
+## Descarga
+
+```{r}
+(tb <- read_csv('https://extranet.who.int/tme/generateCSV.asp?ds=notifications'))
+```
+
+

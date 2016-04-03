@@ -1,0 +1,82 @@
+---
+title: "Proyecto 1"
+author: "Adolfo J. De Unánue T."
+date: "3 de abril de 2016"
+output: html_document
+---
+
+
+# Proyecto 1: Wright Brothers’ 1904 experiments
+
+
+## Data set
+
+[Data set](http://www.centennialofflight.net/chrono/log/1904HuffmanPrairie.htm)
+
+
+## Artículo
+
+[Tales of Huffman: An Exercise in Dealing with Messy Data](./docs/carver.pdf)
+
+## Paquetes a usar
+
+```{r}
+rm(list=ls()) # Limpiamos todo
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(stringr)
+```
+
+
+
+## Descarga de los datos
+
+Para realizar esto usaremos el paquete [`rvest`](http://www.computerworld.com/article/2909560/business-intelligence/web-scraping-with-r-and-rvest-includes-video-code.html]). Este paquete permite realizar _scrapping_ sobre páginas web.
+En particular estamos obteniendo la cuarta tabla de la página
+
+```{r}
+library(rvest)
+
+html <- read_html("http://www.centennialofflight.net/chrono/log/1904HuffmanPrairie.htm")
+bitacora <- html_table(html_nodes(html, "table")[[4]], fill=TRUE)  # fill = TRUE, rellena las celdas faltantes con ""
+bitacora <- tbl_df(bitacora)  ## Para que imprima más bonito
+```
+
+Esto se podría extender para obtener todos los _data sets_ ¿Se te ocurre como?
+
+
+Los datos que acabamos de obtener son:
+
+```{r}
+bitacora
+```
+
+
+
+## Limpieza
+
+Como se menciona en el [artículo](./docs/carver.pdf), la columna `DATE` presenta muchos problemas, ya que cuando hay varios experimentos en un día no se
+"propagó" (i.e. repitió) esta fecha. Usaremos la función `repetir_ultimo()` para "mover" la fecha hasta el siguiente dato en la columna.
+
+```{r}
+# Tomado de: https://stackoverflow.com/questions/7735647/replacing-nas-with-latest-non-na-value
+repetir_ultimo = function(x) {
+    x <- str_trim(x) # Removemos espacios
+    ind = which(!(x == ""))      # Posiciones de los no-vacíos
+    if(x[1] == "") {             # Si el promero es vacío agregalo
+        ind = c(1,ind)           # a los índices
+    }
+    rep(x[ind], times = diff(c(ind, length(x) + 1))) # diff es un lagged diff ?diff
+}
+```
+
+
+Y lo aplicamos
+
+```{r}
+bitacora$DATE <- repetir_ultimo(bitacora$DATE)
+bitacora
+```
+
+A partir de aquí puedes continuar con el artículo.

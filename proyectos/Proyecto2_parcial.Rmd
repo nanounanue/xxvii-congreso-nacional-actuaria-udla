@@ -1,0 +1,35 @@
+---
+title: "Proyecto 2"
+author: "Adolfo J. De Unánue T."
+date: "3 de abril de 2016"
+output: html_document
+---
+
+# Proyecto 2: Babynames
+
+## Data set
+
+```{r}
+library(babynames)
+```
+
+## Artículo
+
+[Baby Names, Visualization, and Social Data Analysis](./docs/final-baby-margin-nocomments.pdf)
+
+
+## Objetivo
+
+Replicar algunas gráficas y responder a las preguntas que hace la gente en la sección `3.2` del artículo.
+
+
+## Paquetes a usar
+
+```{r}
+rm(list=ls()) # Limpiamos todo
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(stringr)
+```
+
