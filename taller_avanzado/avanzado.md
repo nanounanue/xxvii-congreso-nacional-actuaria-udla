@@ -724,7 +724,7 @@ accidents %>%
 
 **Ejercicio**: ¿Cómo arreglarías la gráfica de *Decesos por tipo de accidente*?
 
-**Ejercicio**: Toma un ejemplo de la sección de análisis exploratorio y gráficalo.
+**Ejercicio**: Toma un ejemplo de la sección de análisis exploratorio y grafícalo.
 
 
 
@@ -778,27 +778,27 @@ accidents %>%
 ## Explorar: ggvis
 
 
-<!--html_preserve--><div id="plot_id615233085-container" class="ggvis-output-container">
-<div id="plot_id615233085" class="ggvis-output"></div>
+<!--html_preserve--><div id="plot_id275014187-container" class="ggvis-output-container">
+<div id="plot_id275014187" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id615233085_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id615233085" data-renderer="svg">SVG</a>
+<a id="plot_id275014187_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id275014187" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id615233085_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id615233085" data-renderer="canvas">Canvas</a>
+<a id="plot_id275014187_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id275014187" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id615233085_download" class="ggvis-download" data-plot-id="plot_id615233085">Download</a>
+<a id="plot_id275014187_download" class="ggvis-download" data-plot-id="plot_id275014187">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id615233085_spec = {
+var plot_id275014187_spec = {
   "data": [
     {
       "name": ".0/count1/stack2",
@@ -926,7 +926,7 @@ var plot_id615233085_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id615233085").parseSpec(plot_id615233085_spec);
+ggvis.getPlot("plot_id275014187").parseSpec(plot_id275014187_spec);
 </script><!--/html_preserve-->
 
 
@@ -968,27 +968,27 @@ mtc1 %>% ggvis(x = ~x, y = ~y) %>%
 ## Generating a static (non-dynamic, non-interactive) version of the plot.
 ```
 
-<!--html_preserve--><div id="plot_id537497863-container" class="ggvis-output-container">
-<div id="plot_id537497863" class="ggvis-output"></div>
+<!--html_preserve--><div id="plot_id263058776-container" class="ggvis-output-container">
+<div id="plot_id263058776" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id537497863_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id537497863" data-renderer="svg">SVG</a>
+<a id="plot_id263058776_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id263058776" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id537497863_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id537497863" data-renderer="canvas">Canvas</a>
+<a id="plot_id263058776_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id263058776" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id537497863_download" class="ggvis-download" data-plot-id="plot_id537497863">Download</a>
+<a id="plot_id263058776_download" class="ggvis-download" data-plot-id="plot_id263058776">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id537497863_spec = {
+var plot_id263058776_spec = {
   "data": [
     {
       "name": ".0",
@@ -999,7 +999,7 @@ var plot_id537497863_spec = {
           "y": "number"
         }
       },
-      "values": "\"x\",\"y\"\n0.477194095880259,0.255096555140335\n0.374870349171106,0.831147149887402\n0.933522910184693,0.637540339420084\n0.00497799062170088,0.18156017081812\n0.914325436733197,0.117517020709347\n0.171859020651318,0.564147652774118\n0.180337762299459,0.534165378820617\n0.350979289656971,0.669657068874221\n0.687070325983223,0.00729637379990891\n0.558548384064343,0.263961025096942\n0.882324137638789,0.312471587124746\n0.827685378040187,0.943078157245182\n0.0613073939480819,0.296201286606956\n0.879144965575542,0.192150559879374\n0.227564131766558,0.950435742894188\n0.0263981715682894,0.13035205389373\n0.367810345506296,0.140038955006748\n0.510796354296617,0.504823770695366\n0.067232844105456,0.949673811055254\n0.134539443566464,0.419247840098105"
+      "values": "\"x\",\"y\"\n0.240013447632082,0.877453145147301\n0.910625564081129,0.182734997330699\n0.397118012961,0.791185883264989\n0.198915928932838,0.597426201081835\n0.453627026141621,0.37797727572266\n0.759039892349392,0.651216509519145\n0.560980238090269,0.147556985658593\n0.607947248716373,0.786745900737587\n0.915181646896526,0.605349642848596\n0.193166148355231,0.207621955107898\n0.0548597573908046,0.367453585411422\n0.786987488153391,0.973355794786476\n0.0939245662582107,0.559096347626764\n0.313274949965999,0.928060102220625\n0.767826130781323,0.846981703238562\n0.17090381606482,0.795690169269219\n0.705138412003871,0.122150318298955\n0.688533191776369,0.137638728159945\n0.649901364843827,0.888567429122049\n0.895717211924493,0.0876293078344315"
     },
     {
       "name": "scale/x",
@@ -1109,7 +1109,7 @@ var plot_id537497863_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id537497863").parseSpec(plot_id537497863_spec);
+ggvis.getPlot("plot_id263058776").parseSpec(plot_id263058776_spec);
 </script><!--/html_preserve-->
 
 
@@ -1128,7 +1128,6 @@ plot(accidents %>%
                            useMapTypeControl=T, width=1400,height=800))
 )
 ```
-
 
 # Comunicar
 

@@ -12,7 +12,7 @@ output:
     widescreen: yes
 github: nanounanue
 twitter: '@nano_unanue'
-
+runtime: shiny
 ---
 
 # Introducción
@@ -513,7 +513,7 @@ accidents %>%
 
 **Ejercicio**: ¿Cómo arreglarías la gráfica de *Decesos por tipo de accidente*?
 
-**Ejercicio**: Toma un ejemplo de la sección de análisis exploratorio y gráficalo.
+**Ejercicio**: Toma un ejemplo de la sección de análisis exploratorio y grafícalo.
 
 
 
@@ -651,7 +651,6 @@ plot(accidents %>%
                            useMapTypeControl=T, width=1400,height=800))
 )
 ```
-
 
 # Comunicar
 
