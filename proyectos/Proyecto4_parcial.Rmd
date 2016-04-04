@@ -16,6 +16,74 @@ output: html_document
 
 [ACLED Codebook](./docs/ACLED_Codebook_2016.pdf)
 
+
+
+## Paquetes a usar
+
+```{r}
+rm(list=ls()) # Limpiamos todo
+library(readr)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(stringr)
+```
+
 ## Descarga 
 
-Descargar el CSV o el ZIP desde la página
+### Archivo estándar
+
+```{r}
+if(!file.exists("./data/ACLED Version 6 All Africa 1997-2015_csv_dyadic.csv")) {
+    temp <- tempfile(tmpdir = "/tmp", fileext = ".zip")
+    download.file("http://www.acleddata.com/wp-content/uploads/2016/01/ACLED-Version-6-All-Africa-1997-2015_csv_dyadic.zip", temp, mode="wb")
+    unzip(temp, "ACLED Version 6 All Africa 1997-2015_csv_dyadic.csv", exdir="./data")
+}
+acled_standard <- read_csv("./data/ACLED Version 6 All Africa 1997-2015_csv_dyadic.csv")
+```
+
+
+### Archivo con mónadas
+
+De la página web:
+
+_However, in order to analyse conflict actors and actor types, a monadic file is more useful. This is a file in which Actor 1 and Actor 2 appear in
+a single column, with each actor’s activity constituting a single unit of analysis. This allows users to analyse different trends and patterns,
+like the proportion of events in which a particular actor or actor type is involved; or the geographic patterns of activity of specific actors.
+Creating a monadic file involves duplicating the events so that each actor is represented as participating in a single event (almost doubling the
+number of events in the dataset). For this reason, monadic files are not useful for analysis of the number of events or overall patterns of
+violence in a country, etc. They should be used for analysis of actors, actor types and patterns in their activity._
+
+```{r}
+if(!file.exists("./data/ACLED Version 6 All Africa 1997-2015_csv_monadic.csv")) {
+    temp <- tempfile(tmpdir = "/tmp", fileext = ".zip")
+    download.file("http://www.acleddata.com/wp-content/uploads/2016/01/ACLED-Version-6-All-Africa-1997-2015_csv_monadic.zip", temp, mode="wb")
+    unzip(temp, "ACLED Version 6 All Africa 1997-2015_csv_monadic.csv", exdir="./data")
+}
+acled_monadic <- read_csv("./data/ACLED Version 6 All Africa 1997-2015_csv_monadic.csv")
+```
+
+### Archivo con diádas
+
+De la página web:
+
+_The dyadic actor file allows analysis on specific actors within the dataset. Actor 1 and Actor 2 are each assigned a unique actor ID and the actor
+dyad column represents the two actors involved in each event. This allows users to analyse the number of events; number of fatalities; type of
+event; or geographic location of events in which two discrete actors interact, for example, events involving Boko Haram and the Military Forces of
+Nigeria._ 
+
+```{r}
+acled_dyad <- read_csv("http://www.acleddata.com/wp-content/uploads/2016/02/ACLED-Version-6-All-Africa-1997-2015_dyadic_actordyads_csv.csv")
+```
+
+
+### Archivo geoespacial
+
+```{r}
+if(!dir.exists("./data/acled_gis")) {
+    temp <- tempfile(tmpdir = "/tmp", fileext = ".zip")
+    download.file("http://www.acleddata.com/wp-content/uploads/2016/01/ACLED-Version-6.zip", temp, mode="wb")
+    unzip(temp, exdir="./data/acled_gis")
+}
+```
+

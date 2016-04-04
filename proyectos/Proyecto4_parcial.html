@@ -123,11 +123,61 @@ $(document).ready(function () {
 </div>
 <div id="documentacion" class="section level2">
 <h2>Documentación</h2>
-<p><a href="docs/ACLED_Codebook_2016.pdf">ACLED Codebook</a></p>
+<p><a href="./docs/ACLED_Codebook_2016.pdf">ACLED Codebook</a></p>
+</div>
+<div id="paquetes-a-usar" class="section level2">
+<h2>Paquetes a usar</h2>
+<pre class="r"><code>rm(list=ls()) # Limpiamos todo
+library(readr)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidyr)
+library(lubridate)
+library(stringr)</code></pre>
 </div>
 <div id="descarga" class="section level2">
 <h2>Descarga</h2>
-<p>Descargar el CSV o el ZIP</p>
+<div id="archivo-estandar" class="section level3">
+<h3>Archivo estándar</h3>
+<pre class="r"><code>if(!file.exists(&quot;./data/ACLED Version 6 All Africa 1997-2015_csv_dyadic.csv&quot;)) {
+    temp &lt;- tempfile(tmpdir = &quot;/tmp&quot;, fileext = &quot;.zip&quot;)
+    download.file(&quot;http://www.acleddata.com/wp-content/uploads/2016/01/ACLED-Version-6-All-Africa-1997-2015_csv_dyadic.zip&quot;, temp, mode=&quot;wb&quot;)
+    unzip(temp, &quot;ACLED Version 6 All Africa 1997-2015_csv_dyadic.csv&quot;, exdir=&quot;./data&quot;)
+}
+acled_standard &lt;- read_csv(&quot;./data/ACLED Version 6 All Africa 1997-2015_csv_dyadic.csv&quot;)</code></pre>
+</div>
+<div id="archivo-con-monadas" class="section level3">
+<h3>Archivo con mónadas</h3>
+<p>De la página web:</p>
+<p><em>However, in order to analyse conflict actors and actor types, a monadic file is more useful. This is a file in which Actor 1 and Actor 2 appear in a single column, with each actor’s activity constituting a single unit of analysis. This allows users to analyse different trends and patterns, like the proportion of events in which a particular actor or actor type is involved; or the geographic patterns of activity of specific actors. Creating a monadic file involves duplicating the events so that each actor is represented as participating in a single event (almost doubling the number of events in the dataset). For this reason, monadic files are not useful for analysis of the number of events or overall patterns of violence in a country, etc. They should be used for analysis of actors, actor types and patterns in their activity.</em></p>
+<pre class="r"><code>if(!file.exists(&quot;./data/ACLED Version 6 All Africa 1997-2015_csv_monadic.csv&quot;)) {
+    temp &lt;- tempfile(tmpdir = &quot;/tmp&quot;, fileext = &quot;.zip&quot;)
+    download.file(&quot;http://www.acleddata.com/wp-content/uploads/2016/01/ACLED-Version-6-All-Africa-1997-2015_csv_monadic.zip&quot;, temp, mode=&quot;wb&quot;)
+    unzip(temp, &quot;ACLED Version 6 All Africa 1997-2015_csv_monadic.csv&quot;, exdir=&quot;./data&quot;)
+}
+acled_monadic &lt;- read_csv(&quot;./data/ACLED Version 6 All Africa 1997-2015_csv_monadic.csv&quot;)</code></pre>
+</div>
+<div id="archivo-con-diadas" class="section level3">
+<h3>Archivo con diádas</h3>
+<p>De la página web:</p>
+<p><em>The dyadic actor file allows analysis on specific actors within the dataset. Actor 1 and Actor 2 are each assigned a unique actor ID and the actor dyad column represents the two actors involved in each event. This allows users to analyse the number of events; number of fatalities; type of event; or geographic location of events in which two discrete actors interact, for example, events involving Boko Haram and the Military Forces of Nigeria.</em></p>
+<pre class="r"><code>acled_dyad &lt;- read_csv(&quot;http://www.acleddata.com/wp-content/uploads/2016/02/ACLED-Version-6-All-Africa-1997-2015_dyadic_actordyads_csv.csv&quot;)</code></pre>
+</div>
+<div id="archivo-geoespacial" class="section level3">
+<h3>Archivo geoespacial</h3>
+<pre class="r"><code>if(!dir.exists(&quot;./data/acled_gis&quot;)) {
+    temp &lt;- tempfile(tmpdir = &quot;/tmp&quot;, fileext = &quot;.zip&quot;)
+    download.file(&quot;http://www.acleddata.com/wp-content/uploads/2016/01/ACLED-Version-6.zip&quot;, temp, mode=&quot;wb&quot;)
+    unzip(temp, exdir=&quot;./data/acled_gis&quot;)
+}</code></pre>
+</div>
 </div>
 </div>
 

@@ -27,6 +27,7 @@ Replicar algunas gráficas y responder a las preguntas que hace la gente en la s
 
 ```{r}
 rm(list=ls()) # Limpiamos todo
+library(readr)
 library(dplyr)
 library(tidyr)
 library(lubridate)
