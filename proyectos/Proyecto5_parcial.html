@@ -121,9 +121,31 @@ $(document).ready(function () {
 <h2>Data set</h2>
 <p><a href="https://www.dropbox.com/s/sp2gimo1oi6smz7/GBD_Classification_23NOV2015.psv?dl=0">Data set</a></p>
 </div>
+<div id="paquetes-a-usar" class="section level2">
+<h2>Paquetes a usar</h2>
+<pre class="r"><code>rm(list=ls()) # Limpiamos todo
+library(readr)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidyr)
+library(lubridate)
+library(stringr)</code></pre>
+</div>
 <div id="descarga" class="section level2">
 <h2>Descarga</h2>
-<p>Descargar a mano haciendo click en la liga de arriba.</p>
+<p>Esto puede tomar muuuuuucho tiempo…</p>
+<pre class="r"><code>if(!file.exists(&quot;./data/GBD_Classification_23NOV2015.psv&quot;)) {
+    download.file(&quot;http://www.acleddata.com/wp-content/uploads/2016/01/ACLED-Version-6-All-Africa-1997-2015_csv_monadic.zip&quot;, &quot;GBD_Classification_23NOV2015.psv&quot;, mode=&quot;w&quot;)
+    
+}
+mortalidad_mexico &lt;- read_csv(&quot;GBD_Classification_23NOV2015.psv&quot;)</code></pre>
 </div>
 </div>
 

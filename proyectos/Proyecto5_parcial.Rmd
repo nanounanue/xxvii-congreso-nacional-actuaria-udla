@@ -10,6 +10,27 @@ output: html_document
 
 [Data set](https://www.dropbox.com/s/sp2gimo1oi6smz7/GBD_Classification_23NOV2015.psv?dl=0)
 
+
+## Paquetes a usar
+
+```{r}
+rm(list=ls()) # Limpiamos todo
+library(readr)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(stringr)
+```
+
 ## Descarga
 
-Descargar a mano haciendo click en la liga de arriba.
+Esto puede tomar muuuuuucho tiempo...
+
+```{r, eval=FALSE}
+if(!file.exists("./data/GBD_Classification_23NOV2015.psv")) {
+    download.file("http://www.acleddata.com/wp-content/uploads/2016/01/ACLED-Version-6-All-Africa-1997-2015_csv_monadic.zip", "GBD_Classification_23NOV2015.psv", mode="w")
+    
+}
+mortalidad_mexico <- read_csv("GBD_Classification_23NOV2015.psv")
+```
+
