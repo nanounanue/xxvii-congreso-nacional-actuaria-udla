@@ -21,3 +21,10 @@ vignettes/*.pdf
 
 # Data frames
 *.rds
+*.csv
+*.psv
+*.dbf
+*.sbn
+*.sbx
+*.shp
+*.shx
